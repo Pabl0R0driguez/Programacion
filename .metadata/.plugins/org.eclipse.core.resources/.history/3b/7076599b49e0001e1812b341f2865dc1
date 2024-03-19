@@ -1,0 +1,36 @@
+package Hanoi;
+
+import java.util.ArrayList;
+
+public class Torre {
+
+	ArrayList<Disco> Palo;
+	public Torre() {
+		Palo = new ArrayList <Disco>();
+	}
+	public boolean agregarDisco(Disco a) {	
+		if(Palo.isEmpty() || a.getTamaño() < cima().getTamaño()) {
+			Palo.add(a);
+			return true;
+		}
+		else {
+			System.out.println("Disco no puede ser mayor que cima ");;
+			return false;
+		}
+			
+	}
+	
+	public Disco removerDisco(Disco a) {
+		return Palo.remove(Palo.size()-1);
+	}
+	
+	public Disco cima() {
+	return this.Palo.get(Palo.size()-1);
+	}
+	@Override
+	public String toString() {
+		return "Torre [Palo=" + Palo + "]";
+	}
+	
+	
+}

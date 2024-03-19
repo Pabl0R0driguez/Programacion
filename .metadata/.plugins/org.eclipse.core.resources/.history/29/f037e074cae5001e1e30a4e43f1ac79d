@@ -1,0 +1,11 @@
+package Map;
+
+import java.util.Scanner;
+
+public class DirectorioTelefonico {
+
+	Scanner sc = new Scanner(System.in);
+	int numero = sc.nextInt();
+	System.out.println("");	
+
+}

@@ -1,0 +1,21 @@
+package Parking;
+
+public class Parking {
+
+	
+	public void agregarPlazas(int cantidad) {
+		
+	}
+	public boolean estacionarVehiculo(Vehiculos vehiculo) {
+		return false;
+		
+	}
+	public boolean retirarVehiculo(String matricula) {
+		return false;
+	}
+	
+	public void imprimirEstado() {
+		
+	}
+
+}

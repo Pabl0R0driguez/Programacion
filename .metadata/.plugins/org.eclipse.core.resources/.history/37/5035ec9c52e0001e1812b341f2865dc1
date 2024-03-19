@@ -1,0 +1,13 @@
+package Parking;
+
+public class Plaza {
+
+	private boolean disponible;
+	private char matricula;
+	
+	public void salida() {
+		if() {
+			
+		}
+	}
+}

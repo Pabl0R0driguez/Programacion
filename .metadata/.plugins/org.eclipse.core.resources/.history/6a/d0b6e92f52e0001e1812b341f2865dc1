@@ -1,0 +1,8 @@
+package Parking;
+
+public class VehiculosSalida {
+
+	private boolean disponible;
+	
+	
+}

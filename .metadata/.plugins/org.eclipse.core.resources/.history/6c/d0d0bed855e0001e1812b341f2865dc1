@@ -1,0 +1,39 @@
+package Hanoi;
+
+public class Hanoi {
+	
+	int numeroDisco;
+	//Definimos las torres
+	 Torre A;
+	 Torre B;
+	 Torre C;
+	 
+	 public Hanoi(int numeroDiscos) {
+	 //Creamos las torres
+	 A= new Torre();
+	 B= new Torre();
+	 C= new Torre();
+	 this.numeroDisco=numeroDiscos;
+	 //Recorremos las torres para agregar disco, de arriba a abajo
+	 for(int i=numeroDiscos;i>0;i--) {
+		 this.A.agregarDisco(new Disco(i));
+	 }
+		 
+	 }
+	 //Metodo imprimir, que nos muestra el estado de las tres torres
+	 public void Imprimir() {
+		 System.out.println(A);
+		 System.out.println(B);
+		 System.out.println(C);
+	 }
+	 
+	 //Metodo mueve, lo usaremos para mover un disco de una torre a otra 
+	 public void mueve(int origen, int llegada) {
+		 
+	 }
+	 
+	
+	 
+	}
+
+

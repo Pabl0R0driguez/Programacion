@@ -1,0 +1,21 @@
+package Parking;
+
+public class Vehiculos {
+
+	private char matricula;
+	private String modelo;
+	private int plaza;
+	
+	public boolean entrada(int numvehiculo) {
+		if(plaza>numvehiculo) {
+			System.out.println("Puedes aparcar");
+		}
+		else {
+			System.out.println("El parking está lleno vuelve en otro momento");
+		}
+		return false;
+		
+	}
+}
+
+

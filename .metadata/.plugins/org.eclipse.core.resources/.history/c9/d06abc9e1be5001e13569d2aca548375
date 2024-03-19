@@ -1,0 +1,42 @@
+package Parking;
+
+import java.util.ArrayList;
+
+public class Plaza {
+
+	//Atributos
+	private int numero;
+	private boolean ocupada;
+	private Vehiculos vehiculo;
+	
+	private ArrayList<Vehiculos> Plaza;
+	
+	//Metodo ocupar plaza, nos devolverá un booleano
+	public boolean ocuparPlaza(Vehiculos vehiculo) {
+		if(Plaza.isEmpty()) {
+			Plaza.add(vehiculo);
+			System.out.println("Plaza" + numero + "ha sido ocupada");		
+		}
+		else {
+			System.out.println("Plaza" + numero + "no disponible");
+		}
+		return false;
+	}
+	
+	
+	//Metodo liberarPlaza, nos devolverá un vehiculo
+	public Vehiculos liberarPlaza() {
+		if(!Plaza.isEmpty()) 
+		{
+		Plaza.remove(vehiculo);
+		}
+		else 
+		{
+		System.out.println("La plaza no está ocupada");
+		}			
+		return vehiculo;
+		
+	}
+	
+
+}

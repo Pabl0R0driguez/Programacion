@@ -1,0 +1,25 @@
+package Hanoi;
+
+public class Disco {
+
+private int tamaño;
+	
+public Disco(int disco) {
+	this.tamaño=disco;
+}
+
+public int getTamaño() {
+	return tamaño;
+}
+
+public void setTamaño(int tamaño) {
+	this.tamaño = tamaño;
+}
+
+@Override
+public String toString() {
+	return "Disco [tamaño=" + tamaño + "]";
+}
+
+
+}

@@ -1,0 +1,20 @@
+package Prueba;
+
+import java.util.ArrayList;
+
+public class p1 {
+
+	public static void main(String[] args) {
+		
+	ArrayList<Character> alfabeto = new ArrayList<>();
+	//Alfabeto creado
+	char [] lista = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','ñ','o','o','p','q','r','r','s','t','u','w','x','y','w','x','y','z'};
+		for(char numeros : lista) {
+			alfabeto.add(numeros);
+		}
+	//Mostrar alfabeto
+		System.out.println(alfabeto);
+		
+	}
+
+}

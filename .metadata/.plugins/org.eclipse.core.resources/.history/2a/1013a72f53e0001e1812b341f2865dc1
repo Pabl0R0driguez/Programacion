@@ -1,0 +1,17 @@
+package Parking;
+
+public class Plaza {
+
+	private int numero;
+	private boolean ocupada;
+	private Vehiculos vehiculo;
+	
+	public boolean ocuparPlaza(Vehiculos vehiculo) {
+		return false;
+	}
+	
+	public Vehiculos liberarPlaza() {
+		return vehiculo;
+		
+	}
+}

@@ -1,0 +1,30 @@
+package Parking;
+
+import java.util.ArrayList;
+
+public class Parking  {
+
+private ArrayList <Plaza> Parking;
+
+	public void agregarPlazas(int cantidad) {
+		
+			if() {
+				
+			}
+	
+			}
+
+	
+	public boolean estacionarVehiculo(Vehiculos vehiculo) {
+		return false;
+		
+	}
+	public boolean retirarVehiculo(String matricula) {
+		return false;
+	}
+	
+	public void imprimirEstado() {
+		
+	}
+
+}

@@ -1,0 +1,17 @@
+package Parking;
+
+public class Main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		Parking v1 = new Parking();
+		
+		v1.agregarPlazas(15);
+		v1.estacionarVehiculo(null);
+		v1.retirarVehiculo(null);
+		
+		System.out.println(v1.toString());
+	}
+
+}

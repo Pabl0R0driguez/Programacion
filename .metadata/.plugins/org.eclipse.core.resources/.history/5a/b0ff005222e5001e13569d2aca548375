@@ -1,0 +1,38 @@
+package Parking;
+
+import java.util.ArrayList;
+
+public class Parking  {
+
+private ArrayList <Plaza> Parking;
+
+	//int cantidad es la cantidad de plazas que vamos a meter
+	public void agregarPlazas(int cantidad) {
+	//Recorremos el Parking para poder añadir una nueva plaza	
+			for(int i=0;i<cantidad;i++)
+			{
+			Parking.add(new Plaza(i));
+			System.out.println("Plaza creada");
+			}
+		}
+	
+	public boolean estacionarVehiculo(Vehiculos vehiculo) {
+		
+		if(!Parking.isEmpty()) {
+			System.out.println("Parking lleno");
+		}
+		else {
+			Parking.get(i).
+		}
+		return false;		
+	}
+	public boolean retirarVehiculo(String matricula) {
+		
+		return false;
+	}
+	
+	public void imprimirEstado() {
+		
+	}
+
+}

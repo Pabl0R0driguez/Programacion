@@ -1,0 +1,14 @@
+package Hanoi;
+
+public class Hanoi {
+	
+	int numeroDisco;
+	 Torre A;
+	 Torre B;
+	 Torre C;
+	 public void Hanoi(int numeroDiscos) {
+		 
+	 }
+	}
+
+

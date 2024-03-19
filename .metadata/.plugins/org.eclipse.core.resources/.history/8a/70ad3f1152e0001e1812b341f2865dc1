@@ -1,0 +1,52 @@
+package Parking;
+
+public class VehiculosEntrada {
+
+	private char matricula;
+	private String modelo;
+	private int plaza;
+	
+	public boolean entrada(int numvehiculo) {
+		if(plaza>numvehiculo) {
+			System.out.println("Puedes aparcar");
+		}
+		else {
+			System.out.println("El parking está lleno vuelve en otro momento");
+		}
+		return false;
+		
+	}
+
+	public char getMatricula() {
+		return matricula;
+	}
+	
+	public String getModelo() {
+		return modelo;
+	}
+	
+	public int getPlaza() {
+		return plaza;
+	}
+	
+	public void setMatricula(char matricula) {
+		this.matricula = matricula;
+	}
+
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+
+	public void setPlaza(int plaza) {
+		this.plaza = plaza;
+	}
+
+	@Override
+	public String toString() {
+		return "VehiculosEntrada [matricula=" + matricula + ", modelo=" + modelo + ", plaza=" + plaza + "]";
+	}
+	
+
+}
+
+

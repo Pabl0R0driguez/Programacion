@@ -1,0 +1,11 @@
+package Hanoi;
+
+public class Hanoi {
+	
+	int numeroDisco;
+	int TorreA;
+	int TorreB;
+	int TorreC;
+	}
+
+
