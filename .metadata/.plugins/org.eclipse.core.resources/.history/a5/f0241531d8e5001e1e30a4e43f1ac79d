@@ -8,10 +8,9 @@ public class Main {
 		Parking v1 = new Parking();
 		
 		v1.agregarPlazas(2);
-		
-		v1.retirarVehiculo("AAA 111");
-	
 		v1.imprimirEstado();
+		
+	
 	}
 
 }
