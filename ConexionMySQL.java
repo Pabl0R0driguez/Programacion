@@ -1,4 +1,4 @@
-package BBDD;
+package Escuela;
 
 
 import java.sql.Connection;
@@ -37,7 +37,7 @@ public class ConexionMySQL {
      * @param bd Base de datos a la que nos conectamos
      */
     public ConexionMySQL(String usuario, String pass, String bd) {
-        HOST = "localhost";
+        HOST = "127.0.0.1";
         USUARIO = usuario;
         PASS = pass;
         BD = bd;
