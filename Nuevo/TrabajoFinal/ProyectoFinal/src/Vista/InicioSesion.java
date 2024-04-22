@@ -97,7 +97,7 @@ public class InicioSesion implements ActionListener {
 		System.out.println("Controlador: " + "Usuario: " + usuario + " " + "Contraseña: " + contraseña);
 
 		// 2.- Establece conexión con la base de datos
-		ConexionMySQL conexion = new ConexionMySQL("proyectofinal", "proyectofinal", "ProyectoFinal");
+		ConexionMySQL conexion = new ConexionMySQL("proyectofinal", "proyectofinal", "proyectofinal");
 		try {
 			conexion.conectar();
 		} catch (SQLException e1) {

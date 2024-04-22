@@ -154,7 +154,7 @@ public class Efectivo extends JFrame implements ActionListener {
 	    
 	    	
 	        if (e.getSource()==boton_ingreso) {
-	        	Ingresos i1 = new Ingresos();
+	        	Operaciones i1 = new Operaciones();
 	        }
 	        if (e.getSource()==boton_gastos) {
 	        	Gastos g1 = new Gastos();

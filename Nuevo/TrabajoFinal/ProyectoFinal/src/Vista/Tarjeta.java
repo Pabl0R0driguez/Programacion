@@ -66,6 +66,12 @@ public class Tarjeta extends JFrame implements ActionListener {
 		Pago=new JMenu("Pago");
 		Opciones.add(Pago);
 		
+		JMenu mnNewMenu = new JMenu("Categorias");
+		menuBar.add(mnNewMenu);
+		
+		JMenuItem mntmNewMenuItem = new JMenuItem("Añadir");
+		mnNewMenu.add(mntmNewMenuItem);
+		
 		JMenu Historial = new JMenu("Historial");
 		menuBar.add(Historial);
 		
@@ -106,7 +112,7 @@ public class Tarjeta extends JFrame implements ActionListener {
         
         
         etiqueta_saldo = new JLabel("Saldo:");
-        etiqueta_saldo.setBounds(228, 11, 102, 48);
+        etiqueta_saldo.setBounds(156, 20, 50, 29);
         getContentPane().add(etiqueta_saldo);
         
         label = new JLabel("");
@@ -118,13 +124,13 @@ public class Tarjeta extends JFrame implements ActionListener {
         contentPane.add(label_1);
         
         boton_ingreso = new JButton("Ingresos");
-        boton_ingreso.setBounds(137, 92, 102, 50);
+        boton_ingreso.setBounds(108, 103, 102, 50);
         getContentPane().add(boton_ingreso);
         boton_ingreso.addActionListener(this);
         
         
         boton_gastos = new JButton("Gastos");
-        boton_gastos.setBounds(284, 92, 102, 50);
+        boton_gastos.setBounds(243, 103, 102, 50);
         getContentPane().add(boton_gastos);
         
         separator = new JSeparator();
@@ -154,10 +160,10 @@ public class Tarjeta extends JFrame implements ActionListener {
 	    
 	    	
 	        if (e.getSource()==boton_ingreso) {
-	        	Ingresos i1 = new Ingresos();
+	        	Operaciones i1 = new Operaciones();
 	        	i1.setVisible(true);
 	        	
-	        	add(boton_gastos);
+	        	getContentPane().add(boton_gastos);
 	        }
 	        if (e.getSource()==boton_gastos) {
 	        	Gastos g1 = new Gastos();
@@ -171,6 +177,4 @@ public class Tarjeta extends JFrame implements ActionListener {
 	    
 	        
 	    }
-	    
-	  
 }
