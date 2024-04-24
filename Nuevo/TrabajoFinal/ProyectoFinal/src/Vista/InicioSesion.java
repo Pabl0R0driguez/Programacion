@@ -39,7 +39,7 @@ public class InicioSesion implements ActionListener {
 
 		//
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0, 128, 192));
+		panel.setBackground(new Color(0, 128, 128));
 		frame.getContentPane().add(panel);
 		ComponentesLogin(panel);
 
@@ -97,7 +97,7 @@ public class InicioSesion implements ActionListener {
 		System.out.println("Controlador: " + "Usuario: " + usuario + " " + "Contraseña: " + contraseña);
 
 		// 2.- Establece conexión con la base de datos
-		ConexionMySQL conexion = new ConexionMySQL("proyectofinal", "proyectofinal", "proyectofinal");
+		ConexionMySQL conexion = new ConexionMySQL("proyectofinal", "proyectofinal", "ProyectoFinal");
 		try {
 			conexion.conectar();
 		} catch (SQLException e1) {

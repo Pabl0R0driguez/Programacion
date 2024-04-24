@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -15,12 +16,18 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import Repositorio.ConexionMySQL;
+
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import java.awt.Font;
+import java.awt.Image;
+
+
 import javax.swing.JCheckBox;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -38,7 +45,6 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	private JMenu Historial, Salir;
 	private JMenuItem  SalirItem , Transacciones;
 	private JButton Aceptar;
-	private JLabel Icono;
 	private JLabel Categorias;
 	private JComboBox <String> CategoriasValor;
 	private JLabel Metodo;
@@ -50,6 +56,8 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	String operacion;
 	private JTextField NotaValor;
 	private JLabel Nota;
+	private JSeparator separador;
+	private JLabel Foto;
 	
 	public Operaciones(String operacion) {
 		this.operacion=operacion;
@@ -61,12 +69,18 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 		Desplegable();
 	}
 	
+	
 	public void Menu() {
  		
 		//Barra de consultas
+		
+		separador = new JSeparator();
+		separador.setBounds(0, 188, 514, 9);
+		getContentPane().add(separador);
+		
 		menuBar=new JMenuBar();
 		setJMenuBar(menuBar);
-			
+				
 		Historial = new JMenu("Historial");
 		menuBar.add(Historial);
 		
@@ -81,9 +95,7 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 		SalirItem.addActionListener(this);
 		getContentPane().setLayout(null);
 		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(0, 188, 514, 9);
-		getContentPane().add(separator);
+	
 		
 		Aceptar = new JButton("Aceptar");
 		Aceptar.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -94,47 +106,42 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 		Aceptar.setBounds(364, 202, 110, 20);
 		getContentPane().add(Aceptar);
 		
-		Icono = new JLabel("ICONO");
-		Icono.setBounds(395, 20, 45, 20);
-		getContentPane().add(Icono);
-		
 		Categorias = new JLabel("Categorias:");
 		Categorias.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		Categorias.setBounds(10, 123, 90, 36);
+		Categorias.setBounds(10, 94, 90, 36);
 		getContentPane().add(Categorias);
 	}
 	
-		//Menu desplegable
 		 public void Desplegable() {
 		        getContentPane().setLayout(null);
 		        CategoriasValor=new JComboBox<String>();
-		        CategoriasValor.setBounds(91,133,100,20);
+		        CategoriasValor.setBounds(91,104,100,20);
 
 		        getContentPane().add(CategoriasValor);
 		        
 		        Metodo = new JLabel("Método: ");
 		        Metodo.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		        Metodo.setBounds(10, 77, 90, 36);
+		        Metodo.setBounds(10, 57, 90, 36);
 		        getContentPane().add(Metodo);
 		        
 		        Saldo = new JLabel("SALDO: ");
 		        Saldo.setFont(new Font("Tahoma", Font.BOLD, 24));
 		        Saldo.setHorizontalAlignment(SwingConstants.CENTER);
-		        Saldo.setBounds(240, 47, 110, 68);
+		        Saldo.setBounds(233, 62, 110, 68);
 		        getContentPane().add(Saldo);
 		        
 		        Importe = new JLabel("Importe:");
 		        Importe.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		        Importe.setBounds(10, 40, 60, 20);
+		        Importe.setBounds(10, 20, 60, 20);
 		        getContentPane().add(Importe);
 		        
 		        ImporteValor = new JTextField();
-		        ImporteValor.setBounds(91, 48, 100, 19);
+		        ImporteValor.setBounds(91, 20, 100, 19);
 		        getContentPane().add(ImporteValor);
 		        ImporteValor.setColumns(10);
 		        
 		        NotaValor = new JTextField();
-		        NotaValor.setBounds(311, 134, 96, 19);
+		        NotaValor.setBounds(91, 140, 100, 19);
 		        getContentPane().add(NotaValor);
 		        NotaValor.setColumns(10);
 		        
@@ -146,16 +153,47 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 		        grupo.add(TarjetaBoton);
 		        grupo.add(EfectivoBoton);
 		        
-		        
+				//Menu desplegable
 		       // getContentPane().add(grupo);
-
-		  		        
-		        
+	  		       	        
 		        
 		        Nota = new JLabel("Nota: ");
 		        Nota.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		        Nota.setBounds(256, 135, 45, 13);
+		        Nota.setBounds(20, 142, 45, 13);
 		        getContentPane().add(Nota);
+		        
+		        JPanel panel = new JPanel();
+		        panel.setBackground(new Color(255, 255, 255));
+		        panel.setBounds(91, 47, 100, 46);
+		        getContentPane().add(panel);
+		        panel.setLayout(null);
+		        
+		        JCheckBox Tarjeta = new JCheckBox("Tarjeta");
+		        Tarjeta.setBounds(0, 0, 97, 23);
+		        panel.add(Tarjeta);
+		        
+		        JCheckBox Efectivo = new JCheckBox("Efectivo");
+		        Efectivo.setBounds(0, 23, 97, 23);
+		        panel.add(Efectivo);
+		        
+		        //
+		        JButton boton3 = new JButton("");
+		        boton3.setBorderPainted(false);
+		        boton3.setContentAreaFilled(false);
+		        boton3.setBounds(118, 168, 173, 67);
+		        boton3.addActionListener(this);
+		        	
+		        boton3.setBounds(333, 20, 89, 23);
+		        getContentPane().add(boton3);
+		        
+		    
+				ImageIcon icono2=new ImageIcon(Operaciones.class.getResource("Imagenes/ahorrar-dinero(1).png"));
+				Image imagen2 = icono2.getImage().getScaledInstance(boton3.getWidth(),
+				boton3.getHeight(), Image.SCALE_SMOOTH);
+				ImageIcon iconoAjustado2 = new ImageIcon(imagen2);
+				boton3.setIcon(iconoAjustado2);
+		        
+		      
 
 		        CategoriasValor.addItem("Ocio");
 		        CategoriasValor.addItem("Casa");
@@ -169,6 +207,12 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 		        CategoriasValor.addItemListener(this);
 
 		    }
+		 
+		 
+		 
+		 
+	        		
+	
 
 		 //Metodo para que interactuen los items del menu desplegable
 		    public void itemStateChanged(ItemEvent e) {
@@ -184,7 +228,10 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 		        }	       
 		    }
 	
-	
+		    //Fotos-Iconos ///Pendiente
+	       
+		   
+			
 		
 		//ActionPerformed
 	  public void actionPerformed(ActionEvent e) {		    
@@ -192,6 +239,13 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	        if (e.getSource()==SalirItem) {
 	        	 System.exit(0);
 	        }
+	        
+	        if (e.getSource()==boton3) {
+	        	Principal2 p1 = new Principal2();
+	    		p1.setVisible(true);
+	        }
+	        contentPane.add(boton3);
+	    	
 	        
 	        if (e.getSource()==	Transacciones) {
 	        	Categorias ca1 = new Categorias();
@@ -209,10 +263,24 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	        	
 	        	
 	        	// 2.- Establece conexión con la base de datos
+	        	ConexionMySQL conexion = new ConexionMySQL("proyectofinal", "proyectofinal", "ProyectoFinal");
+	    		try {
+	    			conexion.conectar();
+	    		} catch (SQLException e1) {
+	    			e1.printStackTrace();
+	    		}
 
 	        	// 3.- Insercción de operación
 	        	
 	        	// 4.- Vuelta a la ventana principal
+	    		if (e.getSource()==	Aceptar) {
+		        	Principal2 pp1 = new Principal2();
+		        	pp1.setVisible(true);
+		        	
+		        	
+		        	;
+		        }
+	    	
 	        }	  
 	  	}
 	  

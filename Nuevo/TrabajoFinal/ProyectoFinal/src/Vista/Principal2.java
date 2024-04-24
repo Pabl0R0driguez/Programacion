@@ -29,19 +29,20 @@ import java.awt.FlowLayout;
 import javax.swing.JSeparator;
 import javax.swing.ImageIcon;
 import java.awt.Font;
+import javax.swing.JRadioButton;
 
 public class Principal2 extends JFrame implements ActionListener {
 
 	private JMenuBar menuBar;
 	private JMenu Historial, Salir;
-	private JMenuItem SalirItem;
 	private JPanel contentPane;
 	private JSeparator separator;
-	private JMenu mnNewMenu;
-	private JMenuItem mntmNewMenuItem;
+	private JMenu Categorias;
+	private JMenuItem SalirItem,OpcionAñadir, Transacciones;
 	private JLabel saldo;
 	private JLabel cantidad;
-	private JMenuItem mntmNewMenuItem_1;
+	private JMenuItem OpcionVer;
+	private JButton ingreso, gasto;
 	
 
 	public Principal2() {
@@ -64,19 +65,24 @@ public class Principal2 extends JFrame implements ActionListener {
 		menuBar=new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		mnNewMenu = new JMenu("Categorias");
-		menuBar.add(mnNewMenu);
+		Categorias = new JMenu("Categorias");
+		menuBar.add(Categorias);
 		
-		mntmNewMenuItem_1 = new JMenuItem("Ver");
-		mnNewMenu.add(mntmNewMenuItem_1);
+		OpcionVer = new JMenuItem("Ver");
+		Categorias.add(OpcionVer);
+        OpcionVer.addActionListener(this);
+
 		
-		mntmNewMenuItem = new JMenuItem("Añadir");
-		mnNewMenu.add(mntmNewMenuItem);
+		OpcionAñadir = new JMenuItem("Añadir");
+		Categorias.add(OpcionAñadir);
+        OpcionAñadir.addActionListener(this);
+
 		
-		JMenu Historial = new JMenu("Historial");
+		Historial = new JMenu("Historial");
 		menuBar.add(Historial);
 		
-		JMenuItem Transacciones = new JMenuItem("Transacciones");
+		
+		Transacciones = new JMenuItem("Transacciones");
 		Historial.add(Transacciones);
 		
 		
@@ -106,30 +112,23 @@ public class Principal2 extends JFrame implements ActionListener {
         separator.setBounds(0, 62, 529, 10);
         contentPane.add(separator);
         
-        JButton ingreso = new JButton("Ingreso");
+        //botón ingreso
+        ingreso = new JButton("Ingreso");
         ingreso.setFont(new Font("Tahoma", Font.BOLD, 15));
-        ingreso.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		
-        		Operaciones i1 = new Operaciones("Ingresos"); 
-    	    	i1.setVisible(true);
-        	}
-        });
+        ingreso.addActionListener(this);
         ingreso.setBackground(new Color(255, 0, 0));
         ingreso.setBounds(93, 102, 111, 56);
         contentPane.add(ingreso);
         ingreso.setBackground(Color.GREEN);
         ingreso.setForeground(new Color(0, 0, 0));
         
-        JButton gasto = new JButton("Gasto");
+        //botón gasto
+        gasto = new JButton("Gasto");
         gasto.setFont(new Font("Tahoma", Font.BOLD, 15));
-        gasto.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
+        gasto.addActionListener(this);
         		
-        		Operaciones i1 = new Operaciones("Gastos"); 
-    	    	i1.setVisible(true);
-        	}
-        });
+        		
+        
         gasto.setBackground(new Color(128, 0, 0));
         gasto.setBounds(253, 102, 111, 56);
         contentPane.add(gasto);
@@ -173,10 +172,29 @@ public class Principal2 extends JFrame implements ActionListener {
 		           System.exit(0);
 		           System.out.println("Sesión cerrada");
 		        }
-	       
+	        
+	        if (e.getSource()==OpcionAñadir) {
+	        	Categorias ca1 = new Categorias();
+	        	ca1.setVisible(true);
+		        }
+	        
+	        if (e.getSource()==OpcionVer) {
+	        	Categorias ca1 = new Categorias();
+	        	ca1.setVisible(true);
+		        }
+	        
+	        if (e.getSource()==ingreso) {
+	        	Operaciones i1 = new Operaciones("Ingresos"); 
+	  	    	i1.setVisible(true);
+		        }
+	        
+	        if (e.getSource()==gasto) {
+	        	Operaciones i1 = new Operaciones("Gastos"); 
+		    	i1.setVisible(true);
+		        }
+	        
+	        
+	      
 	    }
-	    
-	    	
-	    	
 	    }
 
