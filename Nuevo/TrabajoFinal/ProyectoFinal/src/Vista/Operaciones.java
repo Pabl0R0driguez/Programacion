@@ -11,13 +11,15 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import Repositorio.ConexionMySQL;
-
+import Repositorio.FuncionesInicioSesion;
+import Repositorio.FuncionesOperaciones;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -40,7 +42,7 @@ import javax.swing.JToggleButton;
 public class Operaciones extends JFrame implements ActionListener, ItemListener, ChangeListener {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+	private JPanel contentPane ,panel;
 	private JMenuBar menuBar;
 	private JMenu Historial, Salir;
 	private JMenuItem  SalirItem , Transacciones;
@@ -58,160 +60,146 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	private JLabel Nota;
 	private JSeparator separador;
 	private JLabel Foto;
+	private JCheckBox Tarjeta, Efectivo;
+	private String usuario;
 	
-	public Operaciones(String operacion) {
-		this.operacion=operacion;
+	
+	public Operaciones(String operacion, String usuario) {
+		this.operacion=operacion;//Para que salga ingreso o gasto de nombre en la ventana
+		this.usuario = usuario;//Llevamos desde inicio de sesión el usuario que se ha introdocido 
 		
+		//Configuración del ContentPane
 		getContentPane().setForeground(new Color(255, 255, 255));
 		getContentPane().setBackground(new Color(0, 128, 128));
+		getContentPane().setLayout(null);
 		Menu();
 		initPantalla();
-		Desplegable();
+		PanelPrincipal();
+		
 	}
 	
-	
+	//Barra de consultas
 	public void Menu() {
  		
-		//Barra de consultas
 		
-		separador = new JSeparator();
-		separador.setBounds(0, 188, 514, 9);
-		getContentPane().add(separador);
-		
-		menuBar=new JMenuBar();
-		setJMenuBar(menuBar);
-				
-		Historial = new JMenu("Historial");
-		menuBar.add(Historial);
-		
-		Transacciones = new JMenuItem("Transacciones");
-		Historial.add(Transacciones);
-		
-		Salir=new JMenu("Salir");
-		menuBar.add(Salir);
-		
-		SalirItem=new JMenuItem("Cerrar Sesión");
-		Salir.add(SalirItem);
-		SalirItem.addActionListener(this);
-		getContentPane().setLayout(null);
-		
+			//Separador
+			separador = new JSeparator();
+			separador.setBounds(0, 188, 514, 9);
+			getContentPane().add(separador);
+			
+			menuBar=new JMenuBar();
+			setJMenuBar(menuBar);
+			//Historial + Transacciones	
+			Historial = new JMenu("Historial");
+			menuBar.add(Historial);	
+			//
+			Transacciones = new JMenuItem("Transacciones");
+			Historial.add(Transacciones);
+			
+			//Salir + Cerrar sesión
+			Salir=new JMenu("Salir");
+			menuBar.add(Salir);			
+			//
+			SalirItem=new JMenuItem("Cerrar Sesión");
+			Salir.add(SalirItem);
+			SalirItem.addActionListener(this);
+			getContentPane().setLayout(null);
+		}
 	
-		
-		Aceptar = new JButton("Aceptar");
-		Aceptar.setFont(new Font("Tahoma", Font.BOLD, 15));
-		Aceptar.addActionListener(this);
+	
+	//ContentPane
+	 public void PanelPrincipal() {
+				 
 		 
-		Aceptar.setBackground(new Color(255, 255, 255));
-		Aceptar.setForeground(new Color(0, 0, 0));
-		Aceptar.setBounds(364, 202, 110, 20);
-		getContentPane().add(Aceptar);
-		
-		Categorias = new JLabel("Categorias:");
-		Categorias.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		Categorias.setBounds(10, 94, 90, 36);
-		getContentPane().add(Categorias);
-	}
-	
-		 public void Desplegable() {
-		        getContentPane().setLayout(null);
-		        CategoriasValor=new JComboBox<String>();
-		        CategoriasValor.setBounds(91,104,100,20);
-
-		        getContentPane().add(CategoriasValor);
-		        
-		        Metodo = new JLabel("Método: ");
-		        Metodo.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		        Metodo.setBounds(10, 57, 90, 36);
-		        getContentPane().add(Metodo);
-		        
-		        Saldo = new JLabel("SALDO: ");
-		        Saldo.setFont(new Font("Tahoma", Font.BOLD, 24));
-		        Saldo.setHorizontalAlignment(SwingConstants.CENTER);
-		        Saldo.setBounds(233, 62, 110, 68);
-		        getContentPane().add(Saldo);
-		        
-		        Importe = new JLabel("Importe:");
-		        Importe.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		        Importe.setBounds(10, 20, 60, 20);
-		        getContentPane().add(Importe);
-		        
-		        ImporteValor = new JTextField();
-		        ImporteValor.setBounds(91, 20, 100, 19);
-		        getContentPane().add(ImporteValor);
-		        ImporteValor.setColumns(10);
-		        
-		        NotaValor = new JTextField();
-		        NotaValor.setBounds(91, 140, 100, 19);
-		        getContentPane().add(NotaValor);
-		        NotaValor.setColumns(10);
-		        
-		        TarjetaBoton = new JRadioButton("Tarjeta");
-		        EfectivoBoton = new JRadioButton("Efectivo");
-
-		        //Group the radio buttons.
-		        ButtonGroup grupo = new ButtonGroup();
-		        grupo.add(TarjetaBoton);
-		        grupo.add(EfectivoBoton);
-		        
-				//Menu desplegable
-		       // getContentPane().add(grupo);
-	  		       	        
-		        
-		        Nota = new JLabel("Nota: ");
-		        Nota.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		        Nota.setBounds(20, 142, 45, 13);
-		        getContentPane().add(Nota);
-		        
-		        JPanel panel = new JPanel();
-		        panel.setBackground(new Color(255, 255, 255));
-		        panel.setBounds(91, 47, 100, 46);
-		        getContentPane().add(panel);
-		        panel.setLayout(null);
-		        
-		        JCheckBox Tarjeta = new JCheckBox("Tarjeta");
-		        Tarjeta.setBounds(0, 0, 97, 23);
-		        panel.add(Tarjeta);
-		        
-		        JCheckBox Efectivo = new JCheckBox("Efectivo");
-		        Efectivo.setBounds(0, 23, 97, 23);
-		        panel.add(Efectivo);
-		        
-		        //
-		        JButton boton3 = new JButton("");
-		        boton3.setBorderPainted(false);
-		        boton3.setContentAreaFilled(false);
-		        boton3.setBounds(118, 168, 173, 67);
-		        boton3.addActionListener(this);
-		        	
-		        boton3.setBounds(333, 20, 89, 23);
-		        getContentPane().add(boton3);
-		        
-		    
-				ImageIcon icono2=new ImageIcon(Operaciones.class.getResource("Imagenes/ahorrar-dinero(1).png"));
-				Image imagen2 = icono2.getImage().getScaledInstance(boton3.getWidth(),
-				boton3.getHeight(), Image.SCALE_SMOOTH);
-				ImageIcon iconoAjustado2 = new ImageIcon(imagen2);
-				boton3.setIcon(iconoAjustado2);
-		        
-		      
-
-		        CategoriasValor.addItem("Ocio");
-		        CategoriasValor.addItem("Casa");
-		        CategoriasValor.addItem("Coche");
-		        CategoriasValor.addItem("Salario");
-		        CategoriasValor.addItem("Mascota");
-		        CategoriasValor.addItem("Regalos");
-		        CategoriasValor.addItem("Añadir");
-		        
-
-		        CategoriasValor.addItemListener(this);
-
+		 	//Importe
+	        Importe = new JLabel("Importe:");
+	        Importe.setFont(new Font("Tahoma", Font.PLAIN, 15));
+	        Importe.setBounds(10, 20, 60, 20);
+	        getContentPane().add(Importe); 	        
+	        //Importe Valor
+	        ImporteValor = new JTextField();
+	        ImporteValor.setBounds(91, 20, 100, 19);
+	        getContentPane().add(ImporteValor);
+	        ImporteValor.setColumns(10);
+	        
+	        
+	        //Método 
+	        Metodo = new JLabel("Método: ");
+	        Metodo.setFont(new Font("Tahoma", Font.PLAIN, 15));
+	        Metodo.setBounds(10, 57, 90, 36);
+	        getContentPane().add(Metodo);        
+	        //JPanel con dos CheckBox dentro 
+	        panel = new JPanel();
+	        panel.setBackground(new Color(255, 255, 255));
+	        panel.setBounds(91, 47, 100, 46);
+	        getContentPane().add(panel);
+	        panel.setLayout(null);
+	        //Tarjeta CheckBox
+	        Tarjeta = new JCheckBox("Tarjeta");
+	        Tarjeta.setBounds(0, 0, 97, 23);
+	        panel.add(Tarjeta);
+	        //Efectivo CheckBox
+	        Efectivo = new JCheckBox("Efectivo");
+	        Efectivo.setBounds(0, 23, 97, 23);
+	        panel.add(Efectivo);
+	        
+	        	 	
+	        //Categorias
+	        Categorias = new JLabel("Categorias:");
+			Categorias.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			Categorias.setBounds(10, 94, 90, 36);
+			getContentPane().add(Categorias);
+			//Desplegable categorias
+			CategoriasValor=new JComboBox<String>();
+			CategoriasValor.setBounds(91,104,100,20);
+			getContentPane().add(CategoriasValor);	        
+			CategoriasValor.addItem("Ocio");
+			CategoriasValor.addItem("Casa");
+			CategoriasValor.addItem("Coche");
+			CategoriasValor.addItem("Salario");
+			CategoriasValor.addItem("Mascota");
+			CategoriasValor.addItem("Regalos");
+			CategoriasValor.addItem("Añadir");	        
+			CategoriasValor.addItemListener(this);
+				             
+	        
+	        //Nota
+	        Nota = new JLabel("Nota: ");
+	        Nota.setFont(new Font("Tahoma", Font.PLAIN, 15));
+	        Nota.setBounds(20, 142, 45, 13);
+	        getContentPane().add(Nota); 
+	        //Nota Valor 
+	        NotaValor = new JTextField();
+	        NotaValor.setBounds(91, 140, 100, 19);
+	        getContentPane().add(NotaValor);
+	        NotaValor.setColumns(10);
+	        
+	        //Saldo
+	        Saldo = new JLabel("SALDO: ");
+	        Saldo.setFont(new Font("Tahoma", Font.BOLD, 24));
+	        Saldo.setHorizontalAlignment(SwingConstants.CENTER);
+	        Saldo.setBounds(233, 62, 110, 68);
+	        getContentPane().add(Saldo);
+	        //Saldo Valor
+	        
+	        
+	       
+	        //Aceptar botón
+	        Aceptar = new JButton("Aceptar");
+			Aceptar.setFont(new Font("Tahoma", Font.BOLD, 15));
+			Aceptar.addActionListener(this);
+			 
+			Aceptar.setBackground(new Color(255, 255, 255));
+			Aceptar.setForeground(new Color(0, 0, 0));
+			Aceptar.setBounds(364, 202, 110, 20);
+			getContentPane().add(Aceptar);
+	        
+	                	        
+	        //Icono que sea botón
+	        
+			
 		    }
 		 
-		 
-		 
-		 
-	        		
 	
 
 		 //Metodo para que interactuen los items del menu desplegable
@@ -226,12 +214,8 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 		                  break;
 		          }		            
 		        }	       
-		    }
-	
-		    //Fotos-Iconos ///Pendiente
-	       
-		   
-			
+		    }      
+		   		
 		
 		//ActionPerformed
 	  public void actionPerformed(ActionEvent e) {		    
@@ -239,18 +223,13 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	        if (e.getSource()==SalirItem) {
 	        	 System.exit(0);
 	        }
-	        
-	        if (e.getSource()==boton3) {
-	        	Principal2 p1 = new Principal2();
-	    		p1.setVisible(true);
-	        }
-	        contentPane.add(boton3);
-	    	
+	           	
 	        
 	        if (e.getSource()==	Transacciones) {
 	        	Categorias ca1 = new Categorias();
 	        	setVisible(true);
 	        }
+	        
 	        if (e.getSource()==	Aceptar) {
 	        	// 1.- Recoge los datos de la operación 
 	        	
@@ -263,7 +242,7 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	        	
 	        	
 	        	// 2.- Establece conexión con la base de datos
-	        	ConexionMySQL conexion = new ConexionMySQL("proyectofinal", "proyectofinal", "ProyectoFinal");
+	        	ConexionMySQL conexion = new ConexionMySQL("proyectofinal", "proyectofinal", "proyectofinal");
 	    		try {
 	    			conexion.conectar();
 	    		} catch (SQLException e1) {
@@ -271,18 +250,29 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	    		}
 
 	        	// 3.- Insercción de operación
-	        	
+	    		try {
+					int existeImporteValor = FuncionesOperaciones.anadir(importe, metodo, categoria, nota, operacion, usuario, conexion);
+									
+					
+					
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+	        
+	  
+	        	}
 	        	// 4.- Vuelta a la ventana principal
 	    		if (e.getSource()==	Aceptar) {
-		        	Principal2 pp1 = new Principal2();
+		        	Principal2 pp1 = new Principal2(usuario);
 		        	pp1.setVisible(true);
 		        	
 		        	
-		        	;
+	    		}
+	  
 		        }
 	    	
-	        }	  
-	  	}
+	  
+	  	
 	  
 	  @Override
 		public void stateChanged(ChangeEvent e) {

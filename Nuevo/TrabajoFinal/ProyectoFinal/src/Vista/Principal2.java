@@ -43,22 +43,22 @@ public class Principal2 extends JFrame implements ActionListener {
 	private JLabel cantidad;
 	private JMenuItem OpcionVer;
 	private JButton ingreso, gasto;
+	private String usuario;//Guarda el nombre del usuario que ha iniciado sesión
 	
 
-	public Principal2() {
+	public Principal2(String usuario) {
+		this.usuario = usuario;
 		Menu();
 		Saldo();
 	    initPantalla();
+	    
 
 	}   
 
 //////////MENU/////////
 
 	
-	public static void main(String[] args) {
-
-		Principal2 p2= new Principal2();
-		}
+	
 	public void Menu() {
 		     		
 		/* Creamos el JMenuBar y lo asociamos con el JFrame */
@@ -148,6 +148,8 @@ public class Principal2 extends JFrame implements ActionListener {
         saldo.setForeground(new Color(0, 0, 0));
         saldo.setHorizontalAlignment(SwingConstants.CENTER);
         saldo.setFont(new Font("Tahoma", Font.BOLD, 15));
+        
+        
 
        }
         
@@ -184,12 +186,12 @@ public class Principal2 extends JFrame implements ActionListener {
 		        }
 	        
 	        if (e.getSource()==ingreso) {
-	        	Operaciones i1 = new Operaciones("Ingresos"); 
+	        	Operaciones i1 = new Operaciones("Ingreso" , usuario); 
 	  	    	i1.setVisible(true);
 		        }
 	        
 	        if (e.getSource()==gasto) {
-	        	Operaciones i1 = new Operaciones("Gastos"); 
+	        	Operaciones i1 = new Operaciones("Gasto" , usuario); 
 		    	i1.setVisible(true);
 		        }
 	        

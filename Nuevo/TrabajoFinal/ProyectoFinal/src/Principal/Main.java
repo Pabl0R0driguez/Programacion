@@ -9,7 +9,7 @@ public class Main {
 	public static void main(String[] args) {
 
 
-		Principal2 p1 = new Principal2();
+		InicioSesion p1 = new InicioSesion();
 		}
 
 }

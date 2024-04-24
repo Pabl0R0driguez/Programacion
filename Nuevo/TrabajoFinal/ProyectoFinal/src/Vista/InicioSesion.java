@@ -97,7 +97,7 @@ public class InicioSesion implements ActionListener {
 		System.out.println("Controlador: " + "Usuario: " + usuario + " " + "Contraseña: " + contraseña);
 
 		// 2.- Establece conexión con la base de datos
-		ConexionMySQL conexion = new ConexionMySQL("proyectofinal", "proyectofinal", "ProyectoFinal");
+		ConexionMySQL conexion = new ConexionMySQL("proyectofinal", "proyectofinal", "proyectofinal");
 		try {
 			conexion.conectar();
 		} catch (SQLException e1) {
@@ -115,7 +115,7 @@ public class InicioSesion implements ActionListener {
 					System.out.println("Controlador: El usuario existe"); 
 					// al iniciar correctamente la sesión, debe desaparecer la ventana de inicio de sesión.
 					v_iniciosesion.setVisible(false);
-					Principal2 vp = new Principal2();
+					Principal2 vp = new Principal2(usuario);
 
 				} 
 				else 
