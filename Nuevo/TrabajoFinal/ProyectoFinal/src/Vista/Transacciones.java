@@ -16,20 +16,22 @@ public class Transacciones extends JFrame {
 	
 	public Transacciones() {
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(100, 149, 237));
+		contentPane.setBackground(new Color(0, 139, 139));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		initPantalla();
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 	}
 	
-	 private void initPantalla() {
+    private void initPantalla() {
 		 	setLocation(200,200);
-	        setTitle("Historial transacciones"); //Título del JFrame
-	        setSize(514, 291); //Dimensiones del JFrame
+	        setTitle("Transacciones"); //Título del JFrame
+	        setSize(402, 321); //Dimensiones del JFrame
 	        setResizable(true); //Redimensionable
 	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Cerrar proceso al cerrar ventana
 	        setVisible(true); //Mostrar JFrame
 	    }
+		 
 	 
 }

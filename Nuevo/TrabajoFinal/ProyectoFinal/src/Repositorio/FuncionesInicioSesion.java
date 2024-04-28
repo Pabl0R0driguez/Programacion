@@ -26,7 +26,7 @@ public class FuncionesInicioSesion {
 			  datos = conexion.ejecutarSelect(sentenciaNombre);
 			  while(datos.next()) {
 				  // Consulta del nombre 
-				  resultado = datos.getString("usuario");
+				  resultado = datos.getString("usuario");//nombre del campo en la base de datos
 				  System.out.println("RESULTADO USUARIO: " + resultado);
 			  }
 			 //Comprobación de contraseñaDO

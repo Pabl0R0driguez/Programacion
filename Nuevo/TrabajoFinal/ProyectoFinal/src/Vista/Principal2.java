@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -15,6 +16,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Repositorio.ConexionMySQL;
+
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -44,10 +48,11 @@ public class Principal2 extends JFrame implements ActionListener {
 	private JMenuItem OpcionVer;
 	private JButton ingreso, gasto;
 	private String usuario;//Guarda el nombre del usuario que ha iniciado sesión
-	
+	private ConexionMySQL conexion;
 
-	public Principal2(String usuario) {
+	public Principal2(String usuario, ConexionMySQL conexion) {
 		this.usuario = usuario;
+		this.conexion=conexion;
 		Menu();
 		Saldo();
 	    initPantalla();
@@ -84,6 +89,8 @@ public class Principal2 extends JFrame implements ActionListener {
 		
 		Transacciones = new JMenuItem("Transacciones");
 		Historial.add(Transacciones);
+		Transacciones.addActionListener(this);
+		
 		
 		
 		
@@ -114,40 +121,40 @@ public class Principal2 extends JFrame implements ActionListener {
         
         //botón ingreso
         ingreso = new JButton("Ingreso");
-        ingreso.setFont(new Font("Tahoma", Font.BOLD, 15));
+        ingreso.setFont(new Font("Tahoma", Font.BOLD, 18));
         ingreso.addActionListener(this);
         ingreso.setBackground(new Color(255, 0, 0));
-        ingreso.setBounds(93, 102, 111, 56);
+        ingreso.setBounds(47, 135, 111, 56);
         contentPane.add(ingreso);
         ingreso.setBackground(Color.GREEN);
         ingreso.setForeground(new Color(0, 0, 0));
         
         //botón gasto
         gasto = new JButton("Gasto");
-        gasto.setFont(new Font("Tahoma", Font.BOLD, 15));
+        gasto.setFont(new Font("Tahoma", Font.BOLD, 18));
         gasto.addActionListener(this);
         		
         		
         
         gasto.setBackground(new Color(128, 0, 0));
-        gasto.setBounds(253, 102, 111, 56);
+        gasto.setBounds(225, 135, 111, 56);
         contentPane.add(gasto);
         gasto.setBackground(Color.RED);
         gasto.setForeground(new Color(0, 0, 0));
         
         cantidad = new JLabel("_____ €");
-        cantidad.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        cantidad.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
         cantidad.setHorizontalAlignment(SwingConstants.CENTER);
-        cantidad.setBounds(237, 21, 68, 42);
+        cantidad.setBounds(208, 21, 68, 42);
         contentPane.add(cantidad);
         
         saldo = new JLabel("SALDO:");
-        saldo.setBounds(152, 21, 97, 42);
+        saldo.setBounds(101, 21, 97, 42);
         contentPane.add(saldo);
         saldo.setForeground(new Color(0, 0, 0));
         saldo.setHorizontalAlignment(SwingConstants.CENTER);
-        saldo.setFont(new Font("Tahoma", Font.BOLD, 15));
+        saldo.setFont(new Font("Tahoma", Font.BOLD, 18));
         
         
 
@@ -155,14 +162,14 @@ public class Principal2 extends JFrame implements ActionListener {
         
 		
 		/* Configuración general de la ventana principal */
-		 private void initPantalla() {
-			 	setLocation(200,200);
-		        setTitle("Ventana Principal"); //Título del JFrame
-		        setSize(514, 291); //Dimensiones del JFrame
-		        setResizable(true); //Redimensionable
-		        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Cerrar proceso al cerrar ventana
-		        setVisible(true); //Mostrar JFrame
-		    }
+        private void initPantalla() {
+		 	setLocation(200,200);
+	        setTitle("Ventana Principal"); //Título del JFrame
+	        setSize(402, 321); //Dimensiones del JFrame
+	        setResizable(true); //Redimensionable
+	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Cerrar proceso al cerrar ventana
+	        setVisible(true); //Mostrar JFrame
+	    }
 		 
 		 
 
@@ -186,14 +193,33 @@ public class Principal2 extends JFrame implements ActionListener {
 		        }
 	        
 	        if (e.getSource()==ingreso) {
-	        	Operaciones i1 = new Operaciones("Ingreso" , usuario); 
-	  	    	i1.setVisible(true);
+	        	Operaciones i1;
+				try {
+					i1 = new Operaciones("Ingreso" , usuario, conexion);
+					i1.setVisible(true);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} 
+	  	    	
 		        }
 	        
 	        if (e.getSource()==gasto) {
-	        	Operaciones i1 = new Operaciones("Gasto" , usuario); 
-		    	i1.setVisible(true);
+	        	Operaciones i1;
+				try {
+					i1 = new Operaciones("Gasto" , usuario,conexion);
+					i1.setVisible(true);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} 
+		    
 		        }
+	        
+	        if(e.getSource()==Transacciones) {
+	        	Transacciones t1 = new Transacciones();
+	        	t1.setVisible(true);
+	        }
 	        
 	        
 	      

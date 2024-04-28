@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -14,6 +15,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.AncestorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -49,7 +51,7 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	private JButton Aceptar;
 	private JLabel Categorias;
 	private JComboBox <String> CategoriasValor;
-	private JLabel Metodo;
+	private JLabel Metodo, SaldoValor;
 	private JLabel Saldo;
 	private JLabel Importe;
 	private JTextField ImporteValor;
@@ -62,11 +64,14 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	private JLabel Foto;
 	private JCheckBox Tarjeta, Efectivo;
 	private String usuario;
+	private String categoria;
+	private String metodo;
+	private ConexionMySQL conexion;
 	
-	
-	public Operaciones(String operacion, String usuario) {
+	public Operaciones(String operacion, String usuario, ConexionMySQL conexion) throws SQLException {
 		this.operacion=operacion;//Para que salga ingreso o gasto de nombre en la ventana
 		this.usuario = usuario;//Llevamos desde inicio de sesión el usuario que se ha introdocido 
+		this.conexion=conexion;
 		
 		//Configuración del ContentPane
 		getContentPane().setForeground(new Color(255, 255, 255));
@@ -108,7 +113,7 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	
 	
 	//ContentPane
-	 public void PanelPrincipal() {
+	 public void PanelPrincipal() throws SQLException {
 				 
 		 
 		 	//Importe
@@ -138,9 +143,11 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	        Tarjeta = new JCheckBox("Tarjeta");
 	        Tarjeta.setBounds(0, 0, 97, 23);
 	        panel.add(Tarjeta);
+	        Tarjeta.addActionListener(this);
 	        //Efectivo CheckBox
 	        Efectivo = new JCheckBox("Efectivo");
 	        Efectivo.setBounds(0, 23, 97, 23);
+	        Efectivo.addActionListener(this);
 	        panel.add(Efectivo);
 	        
 	        	 	
@@ -152,15 +159,15 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 			//Desplegable categorias
 			CategoriasValor=new JComboBox<String>();
 			CategoriasValor.setBounds(91,104,100,20);
-			getContentPane().add(CategoriasValor);	        
-			CategoriasValor.addItem("Ocio");
-			CategoriasValor.addItem("Casa");
-			CategoriasValor.addItem("Coche");
-			CategoriasValor.addItem("Salario");
-			CategoriasValor.addItem("Mascota");
-			CategoriasValor.addItem("Regalos");
-			CategoriasValor.addItem("Añadir");	        
-			CategoriasValor.addItemListener(this);
+			getContentPane().add(CategoriasValor);
+			
+			ArrayList <String> ListaCategorias = FuncionesOperaciones.leerCategorias(conexion);
+			
+			  for(int i = 0;i<ListaCategorias.size();i++) {
+			  CategoriasValor.addItem(ListaCategorias.get(i));
+			  
+			  } CategoriasValor.addItem("Añadir"); CategoriasValor.addItemListener(this);
+			 
 				             
 	        
 	        //Nota
@@ -181,9 +188,13 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	        Saldo.setBounds(233, 62, 110, 68);
 	        getContentPane().add(Saldo);
 	        //Saldo Valor
-	        
-	        
-	       
+	    	SaldoValor = new JLabel("€");
+			SaldoValor.setFont(new Font("Tahoma", Font.BOLD, 15));
+			SaldoValor.setHorizontalAlignment(SwingConstants.CENTER);
+			SaldoValor.setBounds(347, 87, 72, 20);
+			getContentPane().add(SaldoValor);
+		
+	        	       
 	        //Aceptar botón
 	        Aceptar = new JButton("Aceptar");
 			Aceptar.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -193,6 +204,7 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 			Aceptar.setForeground(new Color(0, 0, 0));
 			Aceptar.setBounds(364, 202, 110, 20);
 			getContentPane().add(Aceptar);
+		
 	        
 	                	        
 	        //Icono que sea botón
@@ -212,14 +224,22 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 		                  Categorias a1 = new Categorias();
 		                  a1.setVisible(true);
 		                  break;
+		                  
+		              default:categoria=seleccionado;//para seleccionar la categoria 	            	  
+		                  
+		        
 		          }		            
-		        }	       
+		        }	
+		        if(Efectivo.isSelected() == true) {
+		        	
+		        }
 		    }      
 		   		
 		
 		//ActionPerformed
 	  public void actionPerformed(ActionEvent e) {		    
-		 
+		
+		  	
 	        if (e.getSource()==SalirItem) {
 	        	 System.exit(0);
 	        }
@@ -235,11 +255,18 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	        	
 	        	String importe = ImporteValor.getText(); //Recogemos el importe introducido en el JTextField y lo guardamos en una variable temporal
 	        	String metodo = "Tarjeta";  // Pte leer de la interface gráfica
-	        	String categoria = "Ocio";   // mismo comentario
 	        	String nota = NotaValor.getText();
 	        	String operacion = this.operacion;
-	        	String usuario = "usuario1";
+	        	String usuario = this.usuario;
 	        	
+	        	//Método
+	        	if(Tarjeta.isSelected()) {
+			  		metodo="Tarjeta";
+			  	}
+			  	if(Efectivo.isSelected()) {
+			  		metodo="Efectivo";
+			  	}
+			  
 	        	
 	        	// 2.- Establece conexión con la base de datos
 	        	ConexionMySQL conexion = new ConexionMySQL("proyectofinal", "proyectofinal", "proyectofinal");
@@ -251,8 +278,9 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 
 	        	// 3.- Insercción de operación
 	    		try {
-					int existeImporteValor = FuncionesOperaciones.anadir(importe, metodo, categoria, nota, operacion, usuario, conexion);
-									
+					int AñadirOperaciones = FuncionesOperaciones.anadir(importe, metodo, categoria, nota, operacion, usuario, conexion);
+					int SaldoActual = FuncionesOperaciones.obtenerSaldo(operacion);			
+					
 					
 					
 				} catch (SQLException e1) {
@@ -263,7 +291,7 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	        	}
 	        	// 4.- Vuelta a la ventana principal
 	    		if (e.getSource()==	Aceptar) {
-		        	Principal2 pp1 = new Principal2(usuario);
+		        	Principal2 pp1 = new Principal2(usuario,conexion);
 		        	pp1.setVisible(true);
 		        	
 		        	
