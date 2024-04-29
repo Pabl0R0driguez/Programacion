@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import javax.swing.JSeparator;
 import java.awt.Font;
+import java.awt.Toolkit;
 
 public class InicioSesion implements ActionListener {
 	// Las creamos fuera para poder utilizarlas en todos los metodos
@@ -31,6 +32,7 @@ public class InicioSesion implements ActionListener {
 	public InicioSesion() {
 
 		v_iniciosesion = new JFrame("Inicio de Sesión");
+		v_iniciosesion.setIconImage(Toolkit.getDefaultToolkit().getImage(InicioSesion.class.getResource("/Imagenes/hucha.png")));
 		v_iniciosesion.setBackground(new Color(240, 240, 240));
 		v_iniciosesion.setSize(388, 317);
 		v_iniciosesion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -98,6 +100,7 @@ public class InicioSesion implements ActionListener {
 	if(e.getSource()==botonregistro) {
 		Registro r1 = new Registro();
 		r1.setVisible(true);
+		
 	}
 	else {
 		
@@ -127,7 +130,7 @@ public class InicioSesion implements ActionListener {
 					System.out.println("Controlador: El usuario existe"); 
 					// al iniciar correctamente la sesión, debe desaparecer la ventana de inicio de sesión.
 					v_iniciosesion.setVisible(false);
-					Principal2 vp = new Principal2(usuario, conexion);
+					Principal2 vp = new Principal2(usuario, contraseña, conexion);
 
 				} 
 				else 
@@ -138,6 +141,8 @@ public class InicioSesion implements ActionListener {
 			} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
+		
+    
 		}
 	}
 }

@@ -26,6 +26,7 @@ public class FuncionesOperaciones {
 		 return numfilas;		
 	}
 			
+	//Obtener saldo
 		public static int obtenerSaldo(String usuario) {
 			
 			String sentenciaSaldo = "SELECT * FROM Operaciones"; 		  		

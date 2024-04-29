@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -40,6 +42,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
+import java.awt.Toolkit;
 
 public class Operaciones extends JFrame implements ActionListener, ItemListener, ChangeListener {
 
@@ -67,8 +70,10 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	private String categoria;
 	private String metodo;
 	private ConexionMySQL conexion;
+	private JLabel BotonIcono;
 	
 	public Operaciones(String operacion, String usuario, ConexionMySQL conexion) throws SQLException {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Usuario1\\Desktop\\Nuevo-ProyectoFinal\\Programacion\\Nuevo\\TrabajoFinal\\ProyectoFinal\\src\\Imagenes\\hucha.png"));
 		this.operacion=operacion;//Para que salga ingreso o gasto de nombre en la ventana
 		this.usuario = usuario;//Llevamos desde inicio de sesión el usuario que se ha introdocido 
 		this.conexion=conexion;
@@ -100,6 +105,7 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 			//
 			Transacciones = new JMenuItem("Transacciones");
 			Historial.add(Transacciones);
+			Transacciones.addActionListener(this);
 			
 			//Salir + Cerrar sesión
 			Salir=new JMenu("Salir");
@@ -189,9 +195,10 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	        getContentPane().add(Saldo);
 	        //Saldo Valor
 	    	SaldoValor = new JLabel("€");
+	    	SaldoValor.setBackground(new Color(0, 139, 139));
 			SaldoValor.setFont(new Font("Tahoma", Font.BOLD, 15));
 			SaldoValor.setHorizontalAlignment(SwingConstants.CENTER);
-			SaldoValor.setBounds(347, 87, 72, 20);
+			SaldoValor.setBounds(366, 90, 72, 20);
 			getContentPane().add(SaldoValor);
 		
 	        	       
@@ -204,10 +211,23 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 			Aceptar.setForeground(new Color(0, 0, 0));
 			Aceptar.setBounds(364, 202, 110, 20);
 			getContentPane().add(Aceptar);
-		
+			
+			//BotonIcono
+			BotonIcono = new JLabel("");
+			BotonIcono.setIcon(new ImageIcon("C:\\Users\\Usuario1\\Desktop\\Nuevo-ProyectoFinal\\Programacion\\Nuevo\\TrabajoFinal\\ProyectoFinal\\src\\Imagenes\\atras.png"));
+			BotonIcono.setBounds(431, 0, 67, 60);
+			getContentPane().add(BotonIcono);
+
+			BotonIcono.addMouseListener(new MouseAdapter() {
+	            @Override
+	            public void mouseClicked(MouseEvent e) {
+	            	setVisible(false);
+	               Principal2 p1 = new Principal2(operacion, usuario, conexion);
+	            }
+	        });
 	        
-	                	        
-	        //Icono que sea botón
+				        
+	        
 	        
 			
 		    }
@@ -221,8 +241,15 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 		            
 		            switch (seleccionado) {
 		              case "Añadir":
-		                  Categorias a1 = new Categorias();
-		                  a1.setVisible(true);
+		            	  setVisible(true);
+		                  
+						try {
+							Categorias a1 = new Categorias(operacion,usuario,conexion);
+			                  a1.setVisible(true);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 		                  break;
 		                  
 		              default:categoria=seleccionado;//para seleccionar la categoria 	            	  
@@ -230,10 +257,10 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 		        
 		          }		            
 		        }	
-		        if(Efectivo.isSelected() == true) {
+		       
 		        	
 		        }
-		    }      
+		   
 		   		
 		
 		//ActionPerformed
@@ -246,9 +273,13 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	           	
 	        
 	        if (e.getSource()==	Transacciones) {
-	        	Categorias ca1 = new Categorias();
-	        	setVisible(true);
+	        		setVisible(false);	
+					Transacciones t1 = new Transacciones(operacion, usuario,conexion);
+					t1.setVisible(true);
+	        	
 	        }
+	        
+	        
 	        
 	        if (e.getSource()==	Aceptar) {
 	        	// 1.- Recoge los datos de la operación 
@@ -286,16 +317,21 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-	        
+	    		
+	    		
 	  
 	        	}
 	        	// 4.- Vuelta a la ventana principal
 	    		if (e.getSource()==	Aceptar) {
-		        	Principal2 pp1 = new Principal2(usuario,conexion);
+		        	Principal2 pp1 = new Principal2(operacion,usuario,conexion);
 		        	pp1.setVisible(true);
 		        	
 		        	
 	    		}
+	    		
+	    		//Desconexión base de datos
+	    	
+	        
 	  
 		        }
 	    	
@@ -309,7 +345,8 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	  
 	  /* Configuración general de la ventana principal */
 		 private void initPantalla() {
-			 	setLocation(100,100);
+			 	
+			 	setLocation(250,250);
 		        setTitle(operacion); //Título del JFrame
 		        setSize(514, 291); //Dimensiones del JFrame
 		        setResizable(true); //Redimensionable

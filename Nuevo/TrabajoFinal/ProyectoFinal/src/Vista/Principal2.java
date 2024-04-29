@@ -45,14 +45,16 @@ public class Principal2 extends JFrame implements ActionListener {
 	private JMenuItem SalirItem,OpcionAñadir, Transacciones;
 	private JLabel saldo;
 	private JLabel cantidad;
-	private JMenuItem OpcionVer;
 	private JButton ingreso, gasto;
 	private String usuario;//Guarda el nombre del usuario que ha iniciado sesión
 	private ConexionMySQL conexion;
+	private String operacion;
 
-	public Principal2(String usuario, ConexionMySQL conexion) {
+	public Principal2(String operacion, String usuario, ConexionMySQL conexion) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Principal2.class.getResource("/Imagenes/hucha.png")));
 		this.usuario = usuario;
 		this.conexion=conexion;
+		this.operacion=operacion;
 		Menu();
 		Saldo();
 	    initPantalla();
@@ -72,10 +74,6 @@ public class Principal2 extends JFrame implements ActionListener {
 		
 		Categorias = new JMenu("Categorias");
 		menuBar.add(Categorias);
-		
-		OpcionVer = new JMenuItem("Ver");
-		Categorias.add(OpcionVer);
-        OpcionVer.addActionListener(this);
 
 		
 		OpcionAñadir = new JMenuItem("Añadir");
@@ -183,19 +181,22 @@ public class Principal2 extends JFrame implements ActionListener {
 		        }
 	        
 	        if (e.getSource()==OpcionAñadir) {
-	        	Categorias ca1 = new Categorias();
-	        	ca1.setVisible(true);
-		        }
-	        
-	        if (e.getSource()==OpcionVer) {
-	        	Categorias ca1 = new Categorias();
-	        	ca1.setVisible(true);
+	        	setVisible(false);
+				try {
+					Categorias ca1 = new Categorias(operacion, usuario, conexion);
+					ca1.setVisible(true);
+				} catch (SQLException e1) {
+					
+					e1.printStackTrace();
+				}
+	        	
 		        }
 	        
 	        if (e.getSource()==ingreso) {
-	        	Operaciones i1;
+	        	setVisible(false);
+	        	
 				try {
-					i1 = new Operaciones("Ingreso" , usuario, conexion);
+					Operaciones i1 = new Operaciones("Ingreso" , usuario, conexion);
 					i1.setVisible(true);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -205,9 +206,10 @@ public class Principal2 extends JFrame implements ActionListener {
 		        }
 	        
 	        if (e.getSource()==gasto) {
-	        	Operaciones i1;
+	        	setVisible(false);
+	        
 				try {
-					i1 = new Operaciones("Gasto" , usuario,conexion);
+					Operaciones i1 = new Operaciones("Gasto" , usuario,conexion);
 					i1.setVisible(true);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -217,7 +219,7 @@ public class Principal2 extends JFrame implements ActionListener {
 		        }
 	        
 	        if(e.getSource()==Transacciones) {
-	        	Transacciones t1 = new Transacciones();
+	        	Transacciones t1 = new Transacciones(usuario,operacion,conexion);
 	        	t1.setVisible(true);
 	        }
 	        

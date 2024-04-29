@@ -22,6 +22,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JSeparator;
+import java.awt.Toolkit;
 
 public class Registro extends JFrame implements ActionListener{
 
@@ -29,13 +30,13 @@ public class Registro extends JFrame implements ActionListener{
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
-	private final JSeparator separator = new JSeparator();
+	private JSeparator separator;
 	private JTextField userText; 
 	private JButton botonregistro;
 	private JPasswordField passwordText;
 	private JLabel Usuario, Contraseña;
 	private JFrame v_registro;
-	private final JSeparator separator_1 = new JSeparator();
+	
 	
 
 
@@ -49,7 +50,9 @@ public class Registro extends JFrame implements ActionListener{
 	
 	public void Ventana()
 	{	
+		//JFrame
 		v_registro = new JFrame();
+		v_registro.setIconImage(Toolkit.getDefaultToolkit().getImage(Registro.class.getResource("/Imagenes/hucha.png")));
 		v_registro.setTitle("Registro");
 		v_registro.setBackground(new Color(240, 240, 240));
 
@@ -60,7 +63,7 @@ public class Registro extends JFrame implements ActionListener{
 		v_registro.setVisible(true);
 
 		
-		
+		//JPanel
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 128, 128));
 		v_registro.getContentPane().add(contentPane);
@@ -71,48 +74,46 @@ public class Registro extends JFrame implements ActionListener{
 	public void Componentes() {
 		contentPane.setLayout(null);
 				
-		JSeparator separator = new JSeparator();
-		separator.setBounds(62, 13, 0, 2);
+		separator = new JSeparator();
+		separator.setBounds(0, 187, 436, 8);
 		contentPane.add(separator);
 		separator.setBounds(0, 187, 436, 36);
 		contentPane.add(separator);
 		
-
+		//Usuario
 		Usuario = new JLabel("Usuario:");
 		Usuario.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		Usuario.setForeground(new Color(0, 0, 0));
 		Usuario.setBounds(30, 40, 107, 47);
 		contentPane.add(Usuario);
 
+		//Usuario Valor 
 		userText = new JTextField(20);
 		userText.setToolTipText("");
 		userText.setBackground(new Color(255, 255, 255));
 		userText.setBounds(120, 56, 166, 19);
 		contentPane.add(userText);
 		
+		//Contraseña
 		Contraseña = new JLabel("Contraseña:");
 		Contraseña.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		Contraseña.setForeground(new Color(0, 0, 0));
 		Contraseña.setBounds(30, 127, 81, 19);
 		contentPane.add(Contraseña);
 
+		//Contraseña Valor
 		passwordText = new JPasswordField(20);
 		passwordText.setBounds(120, 129, 166, 19);
 		contentPane.add(passwordText);
 
-			
+		//Botón Registro	
 		botonregistro = new JButton("Registrar");
 		botonregistro.addActionListener(this);
 		botonregistro.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		botonregistro.setBounds(149, 209, 93, 27);
-		contentPane.add(botonregistro);
+		contentPane.add(botonregistro);	
 		
-		
-
-		
-	
 }
-
 
 	public void actionPerformed(ActionEvent e) {
 		
@@ -132,16 +133,20 @@ public class Registro extends JFrame implements ActionListener{
 			try {
 			
 				int Registro = FuncionesRegistro.registro(usuario,contraseña,conexion);
-				System.out.println("Registro: " +  Registro);
 				
-				
+				//Si el usuario  se repite salta mensaje de Usuario Existente
 			} catch (SQLException e1) {
-				JOptionPane.showMessageDialog(null, "Usuario Existente",
+				JOptionPane.showMessageDialog( null, "Usuario Existente",
 	  					"Fallo de registro", JOptionPane.ERROR_MESSAGE);}
 			
 			   userText.setText("");
 			   passwordText.setText("");
+			   
+			   
+			
+	        
 			}
+		  
 		
 		
 		
