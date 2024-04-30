@@ -23,9 +23,10 @@ public class Transacciones extends JFrame {
 	private JPanel contentPane, panel;
 	private JLabel HistorialValor, Historial;
 	private JLabel lblNewLabel;
-	private JLabel BotonIcono;
 	private String usuario, operacion;
 	private ConexionMySQL conexion;
+	private JLabel BotonIcono;
+	
 	
 	public Transacciones(String usuario, String operacion, ConexionMySQL conexion) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Transacciones.class.getResource("/Imagenes/hucha.png")));
@@ -63,21 +64,17 @@ public class Transacciones extends JFrame {
 		Historial.setBounds(167, 11, 61, 11);
 		contentPane.add(Historial);
 		
-		
-		
 		BotonIcono = new JLabel("");
-		BotonIcono.setIcon(new ImageIcon("C:\\Users\\Usuario1\\Desktop\\Nuevo-ProyectoFinal\\Programacion\\Nuevo\\TrabajoFinal\\ProyectoFinal\\src\\Imagenes\\atras.png"));
-		BotonIcono.setBounds(311, 9, 46, 14);
+		BotonIcono.setIcon(new ImageIcon(Transacciones.class.getResource("/Imagenes/atras.png")));
+		BotonIcono.setBounds(343, 10, 45, 13);
 		contentPane.add(BotonIcono);
-	
 		BotonIcono.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
             	setVisible(false);
-               
+               Principal2 p1 = new Principal2(operacion, usuario, conexion);
             }
         });
-		
 		
 	}
 	

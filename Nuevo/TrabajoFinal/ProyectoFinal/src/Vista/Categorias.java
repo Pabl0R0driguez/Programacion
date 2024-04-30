@@ -80,10 +80,13 @@ public class Categorias extends JFrame implements ActionListener{
 		contentPane.add(separator);
 		
 		BotonIcono = new JLabel("");
-		BotonIcono.setIcon(new ImageIcon("C:\\Users\\Usuario1\\Desktop\\Nuevo-ProyectoFinal\\Programacion\\Nuevo\\TrabajoFinal\\ProyectoFinal\\src\\Imagenes\\atras.png"));
 		BotonIcono.setBounds(265, 11, 27, 16);
 		contentPane.add(BotonIcono);
-	
+		
+		BotonIcono = new JLabel("");
+		BotonIcono.setIcon(new ImageIcon(Categorias.class.getResource("/Imagenes/atras.png")));
+		BotonIcono.setBounds(249, 14, 45, 13);
+		contentPane.add(BotonIcono);	
 		BotonIcono.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -111,7 +114,7 @@ public class Categorias extends JFrame implements ActionListener{
 				
 		if (e.getSource()==	AgregarBoton) {
 			setVisible(false);
-	    	// 1.- Recoge los datos de la operación 
+			// 1.- Recoge los datos de la operación 
 	    	
 			String recogerdatos = AñadirValor.getText();
 	    	
@@ -126,8 +129,8 @@ public class Categorias extends JFrame implements ActionListener{
 			// 3.- Insercción de operación
 			try {
 		    	int sentenciaCategorias = FuncionesCategorias.añadirCategorias(recogerdatos, conexion);
-				Principal2 p1 = new Principal2(operacion, usuario, conexion);
-				p1.setVisible(true);
+				Operaciones o1 = new Operaciones(operacion, usuario, conexion);
+				o1.setVisible(true);
 				System.out.println(sentenciaCategorias);
 				
 				
@@ -139,10 +142,6 @@ public class Categorias extends JFrame implements ActionListener{
         
 	    	}
 		  }
-
-    
-		
-
 	}
 
 

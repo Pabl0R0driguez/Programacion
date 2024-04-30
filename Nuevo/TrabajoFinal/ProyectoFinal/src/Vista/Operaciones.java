@@ -214,8 +214,8 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 			
 			//BotonIcono
 			BotonIcono = new JLabel("");
-			BotonIcono.setIcon(new ImageIcon("C:\\Users\\Usuario1\\Desktop\\Nuevo-ProyectoFinal\\Programacion\\Nuevo\\TrabajoFinal\\ProyectoFinal\\src\\Imagenes\\atras.png"));
-			BotonIcono.setBounds(431, 0, 67, 60);
+			BotonIcono.setIcon(new ImageIcon(Categorias.class.getResource("/Imagenes/atras.png")));
+			BotonIcono.setBounds(447, -11, 67, 60);
 			getContentPane().add(BotonIcono);
 
 			BotonIcono.addMouseListener(new MouseAdapter() {
@@ -241,7 +241,7 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 		            
 		            switch (seleccionado) {
 		              case "Añadir":
-		            	  setVisible(true);
+		            	  setVisible(false);
 		                  
 						try {
 							Categorias a1 = new Categorias(operacion,usuario,conexion);
@@ -310,7 +310,8 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	        	// 3.- Insercción de operación
 	    		try {
 					int AñadirOperaciones = FuncionesOperaciones.anadir(importe, metodo, categoria, nota, operacion, usuario, conexion);
-					int SaldoActual = FuncionesOperaciones.obtenerSaldo(operacion);			
+					int SaldoActual = FuncionesOperaciones.obtenerSaldo(conexion);	
+					SaldoValor.setText(1000+"");
 					
 					
 					

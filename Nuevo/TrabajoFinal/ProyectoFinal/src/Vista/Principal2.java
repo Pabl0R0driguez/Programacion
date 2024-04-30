@@ -219,6 +219,7 @@ public class Principal2 extends JFrame implements ActionListener {
 		        }
 	        
 	        if(e.getSource()==Transacciones) {
+	        	setVisible(false);
 	        	Transacciones t1 = new Transacciones(usuario,operacion,conexion);
 	        	t1.setVisible(true);
 	        }

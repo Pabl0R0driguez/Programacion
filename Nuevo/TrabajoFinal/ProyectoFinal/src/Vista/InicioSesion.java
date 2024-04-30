@@ -54,34 +54,40 @@ public class InicioSesion implements ActionListener {
 
 		panel.setLayout(null);
 
+		//Usuario
 		JLabel Usuario = new JLabel("Usuario:");
 		Usuario.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		Usuario.setForeground(new Color(0, 0, 0));
 		Usuario.setBounds(24, 42, 80, 25);
 		panel.add(Usuario);
 
+		//Usuario Valor
 		userText = new JTextField(20);
 		userText.setToolTipText("");
 		userText.setBackground(new Color(255, 255, 255));
 		userText.setBounds(114, 44, 160, 25);
 		panel.add(userText);
-
+		
+		//Contaseña
 		JLabel Contraseña = new JLabel("Contraseña:");
 		Contraseña.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		Contraseña.setForeground(new Color(0, 0, 0));
 		Contraseña.setBounds(10, 116, 102, 25);
 		panel.add(Contraseña);
 
+		//Contraseña Valor
 		passwordText = new JPasswordField(20);
 		passwordText.setBounds(114, 116, 160, 25);
 		panel.add(passwordText);
 
+		//Botón login
 		botonlogin = new JButton("Inicio Sesión");
 		botonlogin.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		botonlogin.setBounds(190, 206, 130, 52);
 		panel.add(botonlogin);
 		botonlogin.addActionListener(this);
 		
+		//Botón Registro
 		botonregistro = new JButton("Registrar");
 		botonregistro.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		botonregistro.setBounds(52, 206, 118, 52);
@@ -98,6 +104,7 @@ public class InicioSesion implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 	if(e.getSource()==botonregistro) {
+		
 		Registro r1 = new Registro();
 		r1.setVisible(true);
 		
@@ -145,4 +152,6 @@ public class InicioSesion implements ActionListener {
     
 		}
 	}
+
+	
 }

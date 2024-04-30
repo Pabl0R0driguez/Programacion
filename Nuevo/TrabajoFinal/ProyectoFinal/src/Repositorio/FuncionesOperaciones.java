@@ -27,11 +27,37 @@ public class FuncionesOperaciones {
 	}
 			
 	//Obtener saldo
-		public static int obtenerSaldo(String usuario) {
+		public static int obtenerSaldo(ConexionMySQL conexion) throws SQLException {
 			
-			String sentenciaSaldo = "SELECT * FROM Operaciones"; 		  		
-			return 0;
+			String resultadoGastos="";
+			String resultadoIngreso="";
 			
+			String sentenciaGasto = "SELECT sum(importe) AS SumaGastos FROM `Operaciones` WHERE movimiento='Ingreso'";
+
+			String sentenciaIngreso ="SELECT sum(importe) AS SumaIngresos FROM `Operaciones` WHERE movimiento='Gasto'";
+		
+			
+			
+			ResultSet Gastos; 
+			//Obtención de gastos
+			Gastos = conexion.ejecutarSelect(sentenciaGasto);
+			  while(Gastos.next()) {
+				  // Consulta del nombre 
+				  resultadoGastos = Gastos.getString("SumaGastos");//nombre del campo en la base de datos
+				  System.out.println("RESULTADO USUARIO: " + resultadoGastos);
+			  }
+			  
+			  
+			ResultSet Ingreso; 
+			  
+			//Comprobación de contraseñaDO
+			Ingreso = conexion.ejecutarSelect(sentenciaIngreso);
+			  while(Ingreso.next()) {
+				  // Consulta del nombre 
+				  resultadoIngreso = Ingreso.getString("SumaIngresos");//nombre del campo en la base de datos
+				  System.out.println("RESULTADO CONTRASEÑA: " + resultadoIngreso);
+			  }
+			  return 0; // resultadoIngreso - resultadoGastos;
 		}
 		
 		public static ArrayList<String> leerCategorias(ConexionMySQL conexion ) throws SQLException {

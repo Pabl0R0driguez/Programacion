@@ -15,8 +15,11 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
@@ -36,7 +39,8 @@ public class Registro extends JFrame implements ActionListener{
 	private JPasswordField passwordText;
 	private JLabel Usuario, Contraseña;
 	private JFrame v_registro;
-	
+	private JLabel BotonIcono;
+	private JLabel lblNewLabel;
 	
 
 
@@ -113,6 +117,21 @@ public class Registro extends JFrame implements ActionListener{
 		botonregistro.setBounds(149, 209, 93, 27);
 		contentPane.add(botonregistro);	
 		
+		//BotonIcono
+		BotonIcono = new JLabel("");
+		BotonIcono.setIcon(new ImageIcon(Registro.class.getResource("/Imagenes/atras.png")));
+		BotonIcono.setBounds(329, 10, 45, 13);
+		contentPane.add(BotonIcono);
+		
+
+		BotonIcono.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            	setVisible(false);
+               InicioSesion i1 = new InicioSesion();
+               
+            }
+        });
 }
 
 	public void actionPerformed(ActionEvent e) {
