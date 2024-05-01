@@ -26,8 +26,9 @@ public class InicioSesion implements ActionListener {
 	JFrame v_iniciosesion;
 	JButton botonregistro, botonlogin;
 	JPanel contentPane;
+	private boolean ConexionEstablecida = false; //Creamos una variable booleana para saber si la conexion ya ha sido establecida
+	ConexionMySQL conexion;//Defino la variable conexión fuera del if para poder llamarla en toda la función
 
-	
 	
 	public InicioSesion() {
 
@@ -102,14 +103,28 @@ public class InicioSesion implements ActionListener {
 	// sobre el botón
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-	if(e.getSource()==botonregistro) {
-		
-		Registro r1 = new Registro();
-		r1.setVisible(true);
-		
-	}
-	else {
+	
+		if(e.getSource()==botonregistro) {
+			
+			//Establece conexión con la base de datos para registro si no se ha establecido previamente
+			if(ConexionEstablecida ==false) {
+				conexion = new ConexionMySQL("proyectofinal", "proyectofinal", "proyectofinal");
+				try {
+					conexion.conectar();
+					ConexionEstablecida=true;//Marcamos que la conexión se ha establecido
+
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}							
+			}	
+			
+			//Abrimos la ventana de registro
+			Registro r1 = new Registro(conexion);
+			r1.setVisible(true);
+			
+		}
+		else {
+			
 		
 		// 1.- Recoge el nombre de usuario y contraseña de la interfaz
 	
@@ -119,12 +134,17 @@ public class InicioSesion implements ActionListener {
 		System.out.println("Controlador: " + "Usuario: " + usuario + " " + "Contraseña: " + contraseña);
 
 		// 2.- Establece conexión con la base de datos
-		ConexionMySQL conexion = new ConexionMySQL("proyectofinal", "proyectofinal", "proyectofinal");
-		try {
-			conexion.conectar();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+		if(ConexionEstablecida ==false) {
+			conexion = new ConexionMySQL("proyectofinal", "proyectofinal", "proyectofinal");
+			try {
+				conexion.conectar();
+				ConexionEstablecida=true;//Marcamos que la conexión se ha establecido
+
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}							
+		}	
+		
 
 		// 3.-consulta a la base de datos, para comprobar el usuario y la contraseña
 

@@ -80,10 +80,6 @@ public class Categorias extends JFrame implements ActionListener{
 		contentPane.add(separator);
 		
 		BotonIcono = new JLabel("");
-		BotonIcono.setBounds(265, 11, 27, 16);
-		contentPane.add(BotonIcono);
-		
-		BotonIcono = new JLabel("");
 		BotonIcono.setIcon(new ImageIcon(Categorias.class.getResource("/Imagenes/atras.png")));
 		BotonIcono.setBounds(249, 14, 45, 13);
 		contentPane.add(BotonIcono);	
@@ -91,7 +87,11 @@ public class Categorias extends JFrame implements ActionListener{
             @Override
             public void mouseClicked(MouseEvent e) {
             	setVisible(false);
-               Principal2 p1 = new Principal2(operacion, usuario, conexion);
+               try {
+				Principal2 p1 = new Principal2(operacion, usuario, conexion);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
             }
         });
 		

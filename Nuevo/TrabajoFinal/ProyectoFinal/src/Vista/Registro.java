@@ -41,10 +41,11 @@ public class Registro extends JFrame implements ActionListener{
 	private JFrame v_registro;
 	private JLabel BotonIcono;
 	private JLabel lblNewLabel;
-	
+	private ConexionMySQL conexion;
 
 
-	public Registro() {
+	public Registro(ConexionMySQL conexion) {
+		this.conexion=conexion;
 		Ventana();
 		Componentes();
 		
@@ -142,13 +143,7 @@ public class Registro extends JFrame implements ActionListener{
 			  String usuario = userText.getText(); 
 	        String contraseña = passwordText.getText(); 
 	        
-	        ConexionMySQL conexion = new ConexionMySQL("proyectofinal", "proyectofinal", "proyectofinal");
-			try {
-				conexion.conectar();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			
+	       
 			try {
 			
 				int Registro = FuncionesRegistro.registro(usuario,contraseña,conexion);

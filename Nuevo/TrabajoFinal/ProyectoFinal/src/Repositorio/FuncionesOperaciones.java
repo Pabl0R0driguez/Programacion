@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import Modelo.Transaccion;
 import Vista.Operaciones;
 
 public class FuncionesOperaciones {
@@ -27,38 +29,62 @@ public class FuncionesOperaciones {
 	}
 			
 	//Obtener saldo
-		public static int obtenerSaldo(ConexionMySQL conexion) throws SQLException {
+		public static int obtenerSaldo(String usuario, ConexionMySQL conexion) throws SQLException {
+			String resultadoGastos="", resultadoIngresos="";
 			
-			String resultadoGastos="";
-			String resultadoIngreso="";
 			
-			String sentenciaGasto = "SELECT sum(importe) AS SumaGastos FROM `Operaciones` WHERE movimiento='Ingreso'";
-
-			String sentenciaIngreso ="SELECT sum(importe) AS SumaIngresos FROM `Operaciones` WHERE movimiento='Gasto'";
+			//////////////////////////   Sentencias SQL para obtener gastos e ingresos del usuario  //////////////////////
+			
+			String sentenciaGasto = "SELECT sum(importe) AS SumaGastos FROM `Operaciones` WHERE movimiento='Gasto' AND usuario ='" + usuario + "';" ;
+			System.out.println("suma de gastos: " + sentenciaGasto);
+			
+			String sentenciaIngreso ="SELECT sum(importe) AS SumaIngresos FROM `Operaciones` WHERE movimiento='Ingreso' AND usuario = '" + usuario + "';" ;
 		
 			
 			
+			
+			////////////////////////////   Consulta de Gastos  ///////////////////////////////
+			//El resultado de la consulta a la base de datos se guarda en el ResultSet
 			ResultSet Gastos; 
-			//Obtención de gastos
+			//Obtención de gastos del usuario
 			Gastos = conexion.ejecutarSelect(sentenciaGasto);
 			  while(Gastos.next()) {
-				  // Consulta del nombre 
-				  resultadoGastos = Gastos.getString("SumaGastos");//nombre del campo en la base de datos
-				  System.out.println("RESULTADO USUARIO: " + resultadoGastos);
+				  // Consulta de los gastos 
+				 resultadoGastos = Gastos.getString("SumaGastos");//nombre del campo de la columna en la base de datos
+				  System.out.println("Total gastos: " + resultadoGastos);
 			  }
 			  
 			  
+			  
+			////////////////////////////Consulta de Ingresos  ///////////////////////////////  
 			ResultSet Ingreso; 
 			  
-			//Comprobación de contraseñaDO
+			//Consulta de ingresos del usuario
 			Ingreso = conexion.ejecutarSelect(sentenciaIngreso);
 			  while(Ingreso.next()) {
 				  // Consulta del nombre 
-				  resultadoIngreso = Ingreso.getString("SumaIngresos");//nombre del campo en la base de datos
-				  System.out.println("RESULTADO CONTRASEÑA: " + resultadoIngreso);
+				  resultadoIngresos = Ingreso.getString("SumaIngresos");//nombre del campo de la columna en la base de datos
+				  System.out.println("Total ingresos: " + resultadoIngresos);
 			  }
-			  return 0; // resultadoIngreso - resultadoGastos;
+			  
+			  /////////////////////////////Saldo Total////////////////////////////
+ //Pasamos las variables String a entero para poder operar con ellas y obtener el saldo final
+			  int TotalIngresos=0;
+			  int TotalGastos=0;
+
+			  if(resultadoIngresos!=null) {			
+				  TotalIngresos= Integer.parseInt(resultadoIngresos);
+			  }
+			  if(resultadoGastos!=null) {
+				  TotalGastos = Integer.parseInt(resultadoGastos);
+			  		  
+			  }
+			  return TotalIngresos - TotalGastos; 
 		}
+		
+		
+		
+		
 		
 		public static ArrayList<String> leerCategorias(ConexionMySQL conexion ) throws SQLException {
 			String sentenciaCategorias = "SELECT Nombre FROM Categorias";
@@ -74,11 +100,40 @@ public class FuncionesOperaciones {
 			return resultado;		
 			}
 		
+		
+		public static ArrayList<Transaccion> Historial(String usuario,ConexionMySQL conexion) throws SQLException {
+			String sentenciaImporte = "SELECT movimiento, metodopago, importe, notas, usuario, Categoria FROM Operaciones where usuario="+"'"+usuario+"';";
+			
+			ArrayList<Transaccion> resultadoHistorial= new ArrayList<>();
+			
+			// campos de cada transacción
+			String movimiento,metodopago,importe, notas, Categoria;
+			Transaccion transaccion;
+			
+			
+			ResultSet Transacciones; 
+			//Obtención de Transacciones del usuario
+			Transacciones = conexion.ejecutarSelect(sentenciaImporte);
+			  while(Transacciones.next()) {
+				  // Consulta de ls Transacciones 
+				  
+				  movimiento = Transacciones.getString("movimiento"); 
+				  metodopago = Transacciones.getString("metodopago"); 
+				  importe = Transacciones.getString("importe"); 
+				  notas = Transacciones.getString("notas"); 
+				  Categoria = Transacciones.getString("Categoria"); 
+				  
+				  transaccion =  new Transaccion(movimiento,metodopago,importe, notas, usuario,Categoria);
+				  resultadoHistorial.add(transaccion);		
+				  
+				  }
+			  return resultadoHistorial;
+}
+		
 }
 
 				
 	
-
 	
 
 

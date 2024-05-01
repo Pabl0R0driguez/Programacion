@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Repositorio.ConexionMySQL;
+import Repositorio.FuncionesOperaciones;
 
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
@@ -50,7 +51,7 @@ public class Principal2 extends JFrame implements ActionListener {
 	private ConexionMySQL conexion;
 	private String operacion;
 
-	public Principal2(String operacion, String usuario, ConexionMySQL conexion) {
+	public Principal2(String operacion, String usuario, ConexionMySQL conexion) throws SQLException {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Principal2.class.getResource("/Imagenes/hucha.png")));
 		this.usuario = usuario;
 		this.conexion=conexion;
@@ -58,7 +59,10 @@ public class Principal2 extends JFrame implements ActionListener {
 		Menu();
 		Saldo();
 	    initPantalla();
-	    
+
+	    int SaldoActual = FuncionesOperaciones.obtenerSaldo(usuario,conexion);	
+		//Pasamos Saldo Actual de entero a String 
+		cantidad.setText(SaldoActual + "");
 
 	}   
 
@@ -140,7 +144,7 @@ public class Principal2 extends JFrame implements ActionListener {
         gasto.setBackground(Color.RED);
         gasto.setForeground(new Color(0, 0, 0));
         
-        cantidad = new JLabel("_____ €");
+        cantidad = new JLabel("");
         cantidad.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
         cantidad.setHorizontalAlignment(SwingConstants.CENTER);
@@ -176,6 +180,11 @@ public class Principal2 extends JFrame implements ActionListener {
 	        
 	       
 	        if (e.getSource()==SalirItem) {
+	        	try {
+					conexion.desconectar();//Desconexión base de datos
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
 		           System.exit(0);
 		           System.out.println("Sesión cerrada");
 		        }

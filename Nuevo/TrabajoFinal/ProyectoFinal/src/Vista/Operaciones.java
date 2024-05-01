@@ -86,7 +86,14 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 		initPantalla();
 		PanelPrincipal();
 		
+		//Saldo inicial
+		int SaldoActual = FuncionesOperaciones.obtenerSaldo(usuario,conexion);	
+		//Pasamos Saldo Actual de entero a String 
+		SaldoValor.setText(SaldoActual + "");
+		
 	}
+	
+	
 	
 	//Barra de consultas
 	public void Menu() {
@@ -194,11 +201,11 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	        Saldo.setBounds(233, 62, 110, 68);
 	        getContentPane().add(Saldo);
 	        //Saldo Valor
-	    	SaldoValor = new JLabel("€");
+	    	SaldoValor = new JLabel("");
 	    	SaldoValor.setBackground(new Color(0, 139, 139));
 			SaldoValor.setFont(new Font("Tahoma", Font.BOLD, 15));
 			SaldoValor.setHorizontalAlignment(SwingConstants.CENTER);
-			SaldoValor.setBounds(366, 90, 72, 20);
+			SaldoValor.setBounds(353, 76, 72, 48);
 			getContentPane().add(SaldoValor);
 		
 	        	       
@@ -222,7 +229,13 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
 	            	setVisible(false);
-	               Principal2 p1 = new Principal2(operacion, usuario, conexion);
+	               try {
+					Principal2 p1 = new Principal2(operacion, usuario, conexion);
+					p1.setVisible(true);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 	            }
 	        });
 	        
@@ -268,7 +281,13 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 		
 		  	
 	        if (e.getSource()==SalirItem) {
+	        	try {
+					conexion.desconectar();//Desconexión base de datos
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
 	        	 System.exit(0);
+	        	 
 	        }
 	           	
 	        
@@ -285,12 +304,11 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	        	// 1.- Recoge los datos de la operación 
 	        	
 	        	String importe = ImporteValor.getText(); //Recogemos el importe introducido en el JTextField y lo guardamos en una variable temporal
-	        	String metodo = "Tarjeta";  // Pte leer de la interface gráfica
 	        	String nota = NotaValor.getText();
 	        	String operacion = this.operacion;
 	        	String usuario = this.usuario;
 	        	
-	        	//Método
+	        	//Método de pago
 	        	if(Tarjeta.isSelected()) {
 			  		metodo="Tarjeta";
 			  	}
@@ -298,21 +316,17 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 			  		metodo="Efectivo";
 			  	}
 			  
-	        	
-	        	// 2.- Establece conexión con la base de datos
-	        	ConexionMySQL conexion = new ConexionMySQL("proyectofinal", "proyectofinal", "proyectofinal");
-	    		try {
-	    			conexion.conectar();
-	    		} catch (SQLException e1) {
-	    			e1.printStackTrace();
-	    		}
+	        		        
 
 	        	// 3.- Insercción de operación
 	    		try {
 					int AñadirOperaciones = FuncionesOperaciones.anadir(importe, metodo, categoria, nota, operacion, usuario, conexion);
-					int SaldoActual = FuncionesOperaciones.obtenerSaldo(conexion);	
-					SaldoValor.setText(1000+"");
+					int SaldoActual = FuncionesOperaciones.obtenerSaldo(usuario,conexion);	
+					System.out.println("SaldoActual: " + SaldoActual);
+					//Pasamos Saldo Actual de entero a String 
+					SaldoValor.setText(SaldoActual + "");
 					
+
 					
 					
 				} catch (SQLException e1) {
@@ -324,8 +338,15 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	        	}
 	        	// 4.- Vuelta a la ventana principal
 	    		if (e.getSource()==	Aceptar) {
-		        	Principal2 pp1 = new Principal2(operacion,usuario,conexion);
-		        	pp1.setVisible(true);
+		        	
+					try {
+					Principal2 pp1 = new Principal2(operacion,usuario,conexion);
+			        	pp1.setVisible(true);
+
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 		        	
 		        	
 	    		}
