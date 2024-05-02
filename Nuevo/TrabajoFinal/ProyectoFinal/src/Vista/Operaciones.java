@@ -21,6 +21,7 @@ import javax.swing.event.AncestorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import Modelo.Transaccion;
 import Repositorio.ConexionMySQL;
 import Repositorio.FuncionesInicioSesion;
 import Repositorio.FuncionesOperaciones;
@@ -28,6 +29,7 @@ import Repositorio.FuncionesOperaciones;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
+import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import java.awt.Font;
@@ -41,6 +43,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 import java.awt.Toolkit;
 
@@ -239,10 +242,7 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	            }
 	        });
 	        
-				        
-	        
-	        
-			
+
 		    }
 		 
 	
@@ -276,7 +276,10 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 		   
 		   		
 		
-		//ActionPerformed
+		    
+		    
+		    
+		/////////////////// ActionPerformed ///////////////
 	  public void actionPerformed(ActionEvent e) {		    
 		
 		  	
@@ -338,27 +341,18 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	        	}
 	        	// 4.- Vuelta a la ventana principal
 	    		if (e.getSource()==	Aceptar) {
-		        	
+		        	this.setVisible(false);
 					try {
 					Principal2 pp1 = new Principal2(operacion,usuario,conexion);
 			        	pp1.setVisible(true);
 
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
-					}
-		        	
-		        	
+					}		        		        	
 	    		}
-	    		
-	    		//Desconexión base de datos
-	    	
-	        
-	  
-		        }
-	    	
-	  
-	  	
+  
+		      }
+
 	  
 	  @Override
 		public void stateChanged(ChangeEvent e) {

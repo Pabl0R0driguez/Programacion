@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 import Modelo.Transaccion;
 import Vista.Operaciones;
+import Vista.Transacciones;
 
 public class FuncionesOperaciones {
 	// comprobar los datos introducidos.
@@ -130,9 +131,24 @@ public class FuncionesOperaciones {
 			  return resultadoHistorial;
 }
 		
+		
+		public static String Filtrar(String usuario,ConexionMySQL conexion) throws SQLException {
+			String resultadoBusqueda=Vista.Transacciones.FiltrarValor.getText();				
+			String sentenciaFiltrar = "SELECT Categoria FROM Operaciones WHERE usuario ='" + usuario + "';" ;
+			
+			ResultSet filtro; 
+			//Obtención de Transacciones del usuario
+			filtro = conexion.ejecutarSelect(sentenciaFiltrar);
+			  while(filtro.next()) {
+				  // Consulta de ls Transacciones 
+				  resultadoBusqueda = sentenciaFiltrar;
+				  sentenciaFiltrar  = filtro.getString("Categoria");;		
+		}
+			return sentenciaFiltrar;
+		
 }
 
-				
+}		
 	
 	
 

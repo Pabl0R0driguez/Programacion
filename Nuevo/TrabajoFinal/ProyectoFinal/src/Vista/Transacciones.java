@@ -27,6 +27,9 @@ import java.awt.Label;
 import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import java.awt.Font;
+import javax.swing.JButton;
 
 public class Transacciones extends JFrame implements ActionListener {
 
@@ -38,9 +41,13 @@ public class Transacciones extends JFrame implements ActionListener {
 	private ConexionMySQL conexion;
 	private JLabel BotonIcono;
 	private JTable table;
+	private Button BotonVolver;
+	public static JTextField FiltrarValor;
+	private JLabel Filtrar;
+	private JButton BuscarBoton;
 	
 	
-	public Transacciones(String usuario, String operacion, ConexionMySQL conexion) {
+	public Transacciones(String usuario, String operacion, ConexionMySQL conexion)  {
 		//setIconImage(Toolkit.getDefaultToolkit().getImage(Transacciones.class.getResource("/Imagenes/hucha.png")));
 		this.usuario=usuario;
 		this.operacion=operacion;
@@ -55,16 +62,16 @@ public class Transacciones extends JFrame implements ActionListener {
 	   
 	        // Frame initialization
 	        f = new JFrame();
-	        f.getContentPane().setBackground(new Color(0, 139, 139));
+	        f.getContentPane().setBackground(new Color(255, 255, 255));
 	 
 	        // Frame Title
 	        f.setTitle("JTable Example");
 	 
 	        // Data to be displayed in the JTable
-	        String[][] datos = new String [50][6] ;
+	        String[][] datos = new String [100][6] ;
 	 
 	        // Column Names
-	        String[] columnNames = { "Nombre", "Movimiento", "Metodo", "Importe", "Notas" , "Categoria" };
+	        String[] columnNames = { "Movimiento", "Metodo", "Importe" , "Nota", "Usuario", "Categoria" };
 	        f.getContentPane().setLayout(null);
 	 
 	        // Initializing the JTable
@@ -73,18 +80,39 @@ public class Transacciones extends JFrame implements ActionListener {
 	 
 	        // adding it to JScrollPane
 	        JScrollPane sp = new JScrollPane(j);
-	        sp.setBounds(0, 0, 486, 112);
+	        sp.setBounds(0, 34, 486, 91);
 	        f.getContentPane().add(sp);
-	        
-	        Button button = new Button("Volver");
-	        button.addActionListener(this);
-	        	
-	        button.setBounds(390, 132, 75, 21);
-	        f.getContentPane().add(button);
+	                
 	        // Frame Size
 	        f.setSize(500, 200);
 	        // Frame Visible = true
 	        f.setVisible(true);
+	        
+	        //Botón Volver
+	        BotonVolver = new Button("Volver");
+	        BotonVolver.setBackground(new Color(255, 255, 255));
+	        BotonVolver.addActionListener(this);      	
+	        BotonVolver.setBounds(200, 131, 81, 22);
+	        f.getContentPane().add(BotonVolver);
+	               	        
+	        //Filtrar
+	        Filtrar = new JLabel("Filtrar: ");
+	        Filtrar.setFont(new Font("Tahoma", Font.BOLD, 15));
+	        Filtrar.setBounds(99, 12, 65, 14);
+	        f.getContentPane().add(Filtrar);
+	        
+	        //Filtrar Valor
+	        FiltrarValor = new JTextField();
+	        FiltrarValor.setBounds(174, 11, 121, 15);
+	        f.getContentPane().add(FiltrarValor);
+	        FiltrarValor.setColumns(10);
+	        
+	        BuscarBoton = new JButton("Buscar");
+	        BuscarBoton.addActionListener(this);
+	        	
+	        BuscarBoton.setBounds(315, 10, 81, 14);
+	        f.getContentPane().add(BuscarBoton);
+	        FiltrarValor.addActionListener(this);
 	        
 	        
 	        try {
@@ -109,13 +137,37 @@ public class Transacciones extends JFrame implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==BotonVolver) {
+			this.setVisible(false);
+			try {
+				Principal2 p1 = new Principal2(usuario,operacion,conexion);
+				p1.setVisible(true);
+				
 
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			
+			}
 		
+		
+		if(e.getSource()==BuscarBoton) {
+					
+		try {
+			String AñadirOperaciones = FuncionesOperaciones.Filtrar(usuario,conexion);
+			System.out.println("hh");
+			this.setName(AñadirOperaciones);
+			
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+		}
 	}
 	
 	
 	
-			
+}
 	
 
-}
+
