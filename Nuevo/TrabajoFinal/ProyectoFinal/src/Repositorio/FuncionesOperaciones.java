@@ -140,9 +140,10 @@ public class FuncionesOperaciones {
 		
 }
 		
-		
+		//Actualizar nombre usuario
 		public static void actualizar(String nuevoUsuario,ConexionMySQL conexion) throws SQLException {
-			String CambiarUsuario = "UPDATE Usuarios  SET usuario = '" + nuevoUsuario+ "' WHERE usuario = '" + Vista.InicioSesion.UsuarioValor.getText() + "'";
+			String CambiarUsuario = "UPDATE Usuarios  SET usuario = '" + nuevoUsuario+ "' WHERE usuario = '" 
+		+ Vista.InicioSesion.UsuarioValor.getText() + "'";
 					
 			conexion.ejecutarInsertDeleteUpdate(CambiarUsuario);
 			
@@ -150,8 +151,30 @@ public class FuncionesOperaciones {
 		
 		
 		
+		
+		
+		//Borrar nombre usuario
+		public static String Eliminar(String nuevoUsuario,ConexionMySQL conexion) throws SQLException {
+		
+			String resultado = "";
+			String BorrarUsuario = "DELETE FROM Usuarios '" + nuevoUsuario + "' WHERE usuario = '" 
+		+ Vista.EliminarUsuario.NuevoUsuario.get + "'";
+					
+			conexion.ejecutarInsertDeleteUpdate(BorrarUsuario);
+			
+			ResultSet borrar; 
+			  //Comprobación  de nombre
+			borrar = conexion.ejecutarSelect(BorrarUsuario);
+			  while(borrar.next()) {
+				  BorrarUsuario = borrar.getString("usuario");//nombre del campo de la columna en la base de datos
 
-}		
+			  }
+			  return BorrarUsuario;
+			}
+		}
+		
+
+	
 	
 	
 

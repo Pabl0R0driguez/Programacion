@@ -20,7 +20,7 @@ import javax.swing.JSeparator;
 import java.awt.Font;
 import java.awt.Toolkit;
 
-public class ActualizarNombre implements ActionListener {
+public class EliminarUsuario implements ActionListener {
 	// Las creamos fuera para poder utilizarlas en todos los metodos
 	JTextField NuevoUsuario;
 	JPasswordField ContraseñaValor;
@@ -30,14 +30,14 @@ public class ActualizarNombre implements ActionListener {
 	ConexionMySQL conexion;//Defino la variable conexión fuera del if para poder llamarla en toda la función
 
 	
-	public ActualizarNombre(ConexionMySQL conexion) {
+	public EliminarUsuario(ConexionMySQL conexion) {
 		this.conexion=conexion;
 		v_iniciosesion = new JFrame("Inicio de Sesión");
 		v_iniciosesion.setIconImage(Toolkit.getDefaultToolkit().getImage(InicioSesion.class.getResource("/Imagenes/hucha.png")));
 		v_iniciosesion.setBackground(new Color(240, 240, 240));
 		v_iniciosesion.setSize(388, 317);
 		v_iniciosesion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		setVisible(true);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 128, 128));
@@ -82,7 +82,7 @@ public class ActualizarNombre implements ActionListener {
 		panel.add(ContraseñaValor);
 			
 		//Botón Registro
-		Actualizar = new JButton("Actualizar");
+		Actualizar = new JButton("Eliminar");
 		Actualizar.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		Actualizar.setBounds(130, 202, 118, 52);
 		panel.add(Actualizar);
@@ -102,7 +102,7 @@ public class ActualizarNombre implements ActionListener {
 		String contraseña = ContraseñaValor.getText();
 		
 		try {
-			FuncionesOperaciones.actualizar(usuario, conexion);
+			FuncionesOperaciones.Eliminar(usuario, conexion);;
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
