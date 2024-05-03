@@ -108,7 +108,7 @@ public class InicioSesion implements ActionListener {
 			
 			//Establece conexión con la base de datos para registro si no se ha establecido previamente
 			if(ConexionEstablecida ==false) {
-				conexion = new ConexionMySQL("proyectofinal", "proyectofinal", "ProyectoFinal");
+				conexion = new ConexionMySQL("proyectofinal", "proyectofinal", "proyectofinal");
 				try {
 					conexion.conectar();
 					ConexionEstablecida=true;//Marcamos que la conexión se ha establecido
@@ -135,7 +135,7 @@ public class InicioSesion implements ActionListener {
 
 		// Establece conexión con la base de datos desde el inicio de sesión
 		if(ConexionEstablecida ==false) {
-			conexion = new ConexionMySQL("proyectofinal", "proyectofinal", "ProyectoFinal");
+			conexion = new ConexionMySQL("proyectofinal", "proyectofinal", "proyectofinal");
 			try {
 				conexion.conectar();
 				ConexionEstablecida=true;//Marcamos que la conexión se ha establecido

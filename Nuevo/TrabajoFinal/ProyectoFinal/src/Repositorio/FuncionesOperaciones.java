@@ -6,6 +6,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 import Modelo.Transaccion;
 import Vista.Operaciones;
 import Vista.Transacciones;
@@ -150,28 +152,38 @@ public class FuncionesOperaciones {
 		}
 		
 		
-		
-		
-		
-		//Borrar nombre usuario
-		public static String Eliminar(String nuevoUsuario,ConexionMySQL conexion) throws SQLException {
-		
-			String resultado = "";
-			String BorrarUsuario = "DELETE FROM Usuarios '" + nuevoUsuario + "' WHERE usuario = '" 
-		+ Vista.EliminarUsuario.NuevoUsuario.get + "'";
-					
-			conexion.ejecutarInsertDeleteUpdate(BorrarUsuario);
+		public static int BorrarCategoria(String categoria, ConexionMySQL conexion) throws SQLException {
 			
+			String sentenciaBorrar = "DELETE FROM Categorias WHERE Nombre = '" + categoria + "';";
+			String sentenciaConsulta = "SELECT Nombre FROM Categorias WHERE Nombre= '" + categoria + "';"; 
+			String resultado = "";
+			
+			
+			
+			/////// Consulta de la categoría a borrar 
+		
 			ResultSet borrar; 
 			  //Comprobación  de nombre
-			borrar = conexion.ejecutarSelect(BorrarUsuario);
+			borrar = conexion.ejecutarSelect(sentenciaConsulta);
 			  while(borrar.next()) {
-				  BorrarUsuario = borrar.getString("usuario");//nombre del campo de la columna en la base de datos
-
+				  // Consulta del nombre 
+				  resultado = borrar.getString("Nombre");//nombre del campo en la base de datos
 			  }
-			  return BorrarUsuario;
-			}
-		}
+			  //
+			  if(resultado.equals(categoria)) {
+				  int fila=
+					conexion.ejecutarInsertDeleteUpdate(sentenciaBorrar);
+System.out.println("fila: "+ fila);
+			  }
+			  else {
+				  JOptionPane.showMessageDialog(null, "La categoria no existe",
+		  					"Error", JOptionPane.ERROR_MESSAGE);
+			  }
+				return 0;
+	  
+}
+}
+
 		
 
 	

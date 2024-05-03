@@ -43,7 +43,7 @@ public class Principal2 extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JSeparator separator;
 	private JMenu Categorias;
-	private JMenuItem SalirItem,OpcionAñadir, Transacciones;
+	private JMenuItem SalirItem,OpcionAñadir, Transacciones,OpcionBorrar;
 	private JLabel Saldo;
 	private JLabel SaldoValor;
 	private JButton ingreso, gasto;
@@ -52,7 +52,6 @@ public class Principal2 extends JFrame implements ActionListener {
 	private String operacion;
 	private JMenuItem NuevoUsuario;
 	private JMenu Actualizar;
-	private JMenuItem EliminarUsuario;
 
 	public Principal2(String operacion, String usuario, ConexionMySQL conexion) throws SQLException {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Principal2.class.getResource("/Imagenes/hucha.png")));
@@ -85,7 +84,11 @@ public class Principal2 extends JFrame implements ActionListener {
 		
 		OpcionAñadir = new JMenuItem("Añadir");
 		Categorias.add(OpcionAñadir);
+		
+		OpcionBorrar = new JMenuItem("Borrar");
+		Categorias.add(OpcionBorrar);
         OpcionAñadir.addActionListener(this);
+        OpcionBorrar.addActionListener(this);
 
 		
 		Historial = new JMenu("Historial");
@@ -101,11 +104,7 @@ public class Principal2 extends JFrame implements ActionListener {
 		
 		NuevoUsuario = new JMenuItem("Cambiar nombre");
 		Actualizar.add(NuevoUsuario);
-		
-		EliminarUsuario = new JMenuItem("Eliminar Usuario");
-		Actualizar.add(EliminarUsuario);
 		NuevoUsuario.addActionListener(this);
-		EliminarUsuario.addActionListener(this);
 		
 		
 		
@@ -236,11 +235,17 @@ public class Principal2 extends JFrame implements ActionListener {
 	        	
 	        }
 	        
-	        if(e.getSource()==EliminarUsuario) {
+	        if(e.getSource()==OpcionBorrar) {
 	        	setVisible(false);
-	        	EliminarUsuario e1 = new EliminarUsuario(conexion);
-	        	
+	        	try {
+					EliminarCategoria  t1  = new EliminarCategoria(conexion);
+					t1.setVisible(true);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
 	        }
+	        
+	      
 	        
 	        
 	      

@@ -25,25 +25,23 @@ import javax.swing.JSeparator;
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
 
-public class Categorias extends JFrame implements ActionListener{
+public class EliminarCategoria extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField AñadirValor;
-	private JLabel Añadir;
-	private JButton AgregarBoton;
+	private JTextField BorrarValor;
+	private JLabel Categoria;
+	private JButton BorrarBoton;
 	private JSeparator separator;
 	private String operacion;
 	private String usuario;
 	private ConexionMySQL conexion;
 	private JLabel BotonIcono;
 	
-	public Categorias(String operacion, String usuario, ConexionMySQL conexion) throws SQLException {
+	public EliminarCategoria( ConexionMySQL conexion) throws SQLException {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Categorias.class.getResource("/Imagenes/hucha.png")));
-		this.operacion=operacion;
-		this.usuario = usuario; 
 		this.conexion=conexion;
-		
+		System.out.println("dentro eliminarcategoria");
 		Ventana();
 		initPantalla();
 	}
@@ -59,21 +57,21 @@ public class Categorias extends JFrame implements ActionListener{
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		AñadirValor = new JTextField();
-		AñadirValor.setBounds(114, 35, 96, 19);
-		contentPane.add(AñadirValor);
-		AñadirValor.setColumns(10);
+		BorrarValor = new JTextField();
+		BorrarValor.setBounds(114, 35, 96, 19);
+		contentPane.add(BorrarValor);
+		BorrarValor.setColumns(10);
 		
-		Añadir = new JLabel("Añadir:");
-		Añadir.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		Añadir.setBounds(28, 34, 58, 16);
-		contentPane.add(Añadir);
+		Categoria = new JLabel("Categoria: ");
+		Categoria.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		Categoria.setBounds(10, 34, 94, 30);
+		contentPane.add(Categoria);
 		
-		AgregarBoton = new JButton("Agregar");
-		AgregarBoton.addActionListener(this);
+		BorrarBoton = new JButton("Borrar");
+		BorrarBoton.addActionListener(this);
 		
-		AgregarBoton.setBounds(200, 84, 81, 19);
-		contentPane.add(AgregarBoton);
+		BorrarBoton.setBounds(200, 84, 81, 19);
+		contentPane.add(BorrarBoton);
 		
 		separator = new JSeparator();
 		separator.setBounds(0, 76, 302, 2);
@@ -112,14 +110,16 @@ public class Categorias extends JFrame implements ActionListener{
 
 	  public void actionPerformed(ActionEvent e) {
 				
-		if (e.getSource()==	AgregarBoton) {
+		if (e.getSource()==	BorrarBoton) {
 			setVisible(false);
 			// 1.- Recoge los datos de la operación 
 	    	
-			String recogerdatos = AñadirValor.getText();
-			
+			String recogerdatos = BorrarValor.getText();
+	    	
+	   
+			// 3.- Insercción de operación
 			try {
-		    	int sentenciaCategorias = FuncionesCategorias.añadirCategorias(recogerdatos, conexion);
+		    	int sentenciaCategorias =  FuncionesOperaciones.BorrarCategoria(recogerdatos, conexion);
 				Operaciones o1 = new Operaciones(operacion, usuario, conexion);
 				o1.setVisible(true);
 				System.out.println(sentenciaCategorias);
