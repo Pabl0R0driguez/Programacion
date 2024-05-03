@@ -50,6 +50,8 @@ public class Principal2 extends JFrame implements ActionListener {
 	private String usuario;//Guarda el nombre del usuario que ha iniciado sesión
 	private ConexionMySQL conexion;
 	private String operacion;
+	private JMenuItem NuevoUsuario;
+	private JMenu Actualizar;
 
 	public Principal2(String operacion, String usuario, ConexionMySQL conexion) throws SQLException {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Principal2.class.getResource("/Imagenes/hucha.png")));
@@ -92,6 +94,13 @@ public class Principal2 extends JFrame implements ActionListener {
 		Transacciones = new JMenuItem("Transacciones");
 		Historial.add(Transacciones);
 		Transacciones.addActionListener(this);
+		
+		Actualizar = new JMenu("Actualizar Usuario");
+		menuBar.add(Actualizar);
+		
+		NuevoUsuario = new JMenuItem("Nuevo Usuario");
+		Actualizar.add(NuevoUsuario);
+		NuevoUsuario.addActionListener(this);
 		
 		
 		
@@ -213,6 +222,13 @@ public class Principal2 extends JFrame implements ActionListener {
 	        	setVisible(false);
 	        	Transacciones t1 = new Transacciones(usuario,operacion,conexion);
 	        	t1.setVisible(true);
+	        }
+	        
+	        
+	        if(e.getSource()== NuevoUsuario) {
+	        	setVisible(false);
+	        	ActualizarNombre a1 = new ActualizarNombre(conexion);
+	        	
 	        }
 	        
 	        

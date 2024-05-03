@@ -87,7 +87,7 @@ public class FuncionesOperaciones {
 		
 		
 		
-		
+		//////////////////////////////
 		public static ArrayList<String> leerCategorias(ConexionMySQL conexion ) throws SQLException {
 			String sentenciaCategorias = "SELECT Nombre FROM Categorias";
 			ArrayList<String> resultado = new ArrayList<>();
@@ -132,13 +132,24 @@ public class FuncionesOperaciones {
 			  return resultadoHistorial;
 }
 		
-		
+///////////////////////??		
 		public static String Filtrar() throws SQLException {
 			String resultadoBusqueda=Vista.Transacciones.FiltrarValor.getText();				
 			
 			return resultadoBusqueda;
 		
 }
+		
+		
+		public static void actualizar(String nuevoUsuario,ConexionMySQL conexion) throws SQLException {
+			String CambiarUsuario = "UPDATE Usuarios  SET usuario = '" + nuevoUsuario+ "' WHERE usuario = '" + Vista.InicioSesion.UsuarioValor.getText() + "'";
+					
+			conexion.ejecutarInsertDeleteUpdate(CambiarUsuario);
+			
+		}
+		
+		
+		
 
 }		
 	
