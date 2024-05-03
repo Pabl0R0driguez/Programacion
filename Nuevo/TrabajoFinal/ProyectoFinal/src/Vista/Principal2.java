@@ -44,8 +44,8 @@ public class Principal2 extends JFrame implements ActionListener {
 	private JSeparator separator;
 	private JMenu Categorias;
 	private JMenuItem SalirItem,OpcionAñadir, Transacciones;
-	private JLabel saldo;
-	private JLabel cantidad;
+	private JLabel Saldo;
+	private JLabel SaldoValor;
 	private JButton ingreso, gasto;
 	private String usuario;//Guarda el nombre del usuario que ha iniciado sesión
 	private ConexionMySQL conexion;
@@ -62,7 +62,7 @@ public class Principal2 extends JFrame implements ActionListener {
 
 	    int SaldoActual = FuncionesOperaciones.obtenerSaldo(usuario,conexion);	
 		//Pasamos Saldo Actual de entero a String 
-		cantidad.setText(SaldoActual + "");
+		SaldoValor.setText(SaldoActual + "");
 
 	}   
 
@@ -134,51 +134,33 @@ public class Principal2 extends JFrame implements ActionListener {
         //botón gasto
         gasto = new JButton("Gasto");
         gasto.setFont(new Font("Tahoma", Font.BOLD, 18));
-        gasto.addActionListener(this);
-        		
-        		
-        
+        gasto.addActionListener(this);     
         gasto.setBackground(new Color(128, 0, 0));
         gasto.setBounds(225, 135, 111, 56);
         contentPane.add(gasto);
         gasto.setBackground(Color.RED);
         gasto.setForeground(new Color(0, 0, 0));
         
-        cantidad = new JLabel("");
-        cantidad.setFont(new Font("Tahoma", Font.PLAIN, 18));
-
-        cantidad.setHorizontalAlignment(SwingConstants.CENTER);
-        cantidad.setBounds(208, 21, 68, 42);
-        contentPane.add(cantidad);
+        //SaldoValor
+        SaldoValor = new JLabel("");
+        SaldoValor.setFont(new Font("Tahoma", Font.BOLD, 18));
+        SaldoValor.setHorizontalAlignment(SwingConstants.CENTER);
+        SaldoValor.setBounds(177, 21, 68, 42);
+        contentPane.add(SaldoValor);
         
-        saldo = new JLabel("SALDO:");
-        saldo.setBounds(101, 21, 97, 42);
-        contentPane.add(saldo);
-        saldo.setForeground(new Color(0, 0, 0));
-        saldo.setHorizontalAlignment(SwingConstants.CENTER);
-        saldo.setFont(new Font("Tahoma", Font.BOLD, 18));
-        
-        
+        //Saldo
+        Saldo = new JLabel("SALDO:");
+        Saldo.setBounds(101, 21, 97, 42);
+        contentPane.add(Saldo);
+        Saldo.setForeground(new Color(0, 0, 0));
+        Saldo.setHorizontalAlignment(SwingConstants.CENTER);
+        Saldo.setFont(new Font("Tahoma", Font.BOLD, 18));
+              
 
        }
-        
-		
-		/* Configuración general de la ventana principal */
-        private void initPantalla() {
-		 	setLocation(200,200);
-	        setTitle("Ventana Principal"); //Título del JFrame
-	        setSize(402, 321); //Dimensiones del JFrame
-	        setResizable(true); //Redimensionable
-	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Cerrar proceso al cerrar ventana
-	        setVisible(true); //Mostrar JFrame
-	    }
-		 
-		 
-
-	    /* Método que implementa las acciones de cada ítem de menú */
+  
 	    public void actionPerformed(ActionEvent e) {
-	        
-	       
+	               
 	        if (e.getSource()==SalirItem) {
 	        	try {
 					conexion.desconectar();//Desconexión base de datos
@@ -235,6 +217,16 @@ public class Principal2 extends JFrame implements ActionListener {
 	        
 	        
 	      
+	    }
+	    
+		/* Configuración general de la ventana principal */
+        private void initPantalla() {
+		 	setLocation(200,200);
+	        setTitle("Ventana Principal"); //Título del JFrame
+	        setSize(402, 321); //Dimensiones del JFrame
+	        setResizable(true); //Redimensionable
+	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Cerrar proceso al cerrar ventana
+	        setVisible(true); //Mostrar JFrame
 	    }
 	    }
 

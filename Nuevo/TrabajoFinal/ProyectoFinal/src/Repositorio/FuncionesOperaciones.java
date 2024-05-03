@@ -36,10 +36,11 @@ public class FuncionesOperaciones {
 			
 			//////////////////////////   Sentencias SQL para obtener gastos e ingresos del usuario  //////////////////////
 			
-			String sentenciaGasto = "SELECT sum(importe) AS SumaGastos FROM `Operaciones` WHERE movimiento='Gasto' AND usuario ='" + usuario + "';" ;
-			System.out.println("suma de gastos: " + sentenciaGasto);
+			String sentenciaGasto = "SELECT sum(importe) AS SumaGastos "
+			+ "FROM `Operaciones` WHERE movimiento='Gasto' AND usuario ='" + usuario + "';" ;
 			
-			String sentenciaIngreso ="SELECT sum(importe) AS SumaIngresos FROM `Operaciones` WHERE movimiento='Ingreso' AND usuario = '" + usuario + "';" ;
+			String sentenciaIngreso ="SELECT sum(importe) AS SumaIngresos "
+			+ "FROM `Operaciones` WHERE movimiento='Ingreso' AND usuario = '" + usuario + "';" ;
 		
 			
 			
@@ -132,19 +133,10 @@ public class FuncionesOperaciones {
 }
 		
 		
-		public static String Filtrar(String usuario,ConexionMySQL conexion) throws SQLException {
+		public static String Filtrar() throws SQLException {
 			String resultadoBusqueda=Vista.Transacciones.FiltrarValor.getText();				
-			String sentenciaFiltrar = "SELECT Categoria FROM Operaciones WHERE usuario ='" + usuario + "';" ;
 			
-			ResultSet filtro; 
-			//Obtención de Transacciones del usuario
-			filtro = conexion.ejecutarSelect(sentenciaFiltrar);
-			  while(filtro.next()) {
-				  // Consulta de ls Transacciones 
-				  resultadoBusqueda = sentenciaFiltrar;
-				  sentenciaFiltrar  = filtro.getString("Categoria");;		
-		}
-			return sentenciaFiltrar;
+			return resultadoBusqueda;
 		
 }
 

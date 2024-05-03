@@ -21,13 +21,13 @@ import java.awt.Toolkit;
 
 public class InicioSesion implements ActionListener {
 	// Las creamos fuera para poder utilizarlas en todos los metodos
-	JTextField userText;
-	JPasswordField passwordText;
+	JTextField UsuarioValor;
+	JPasswordField ContraseñaValor;
 	JFrame v_iniciosesion;
 	JButton botonregistro, botonlogin;
 	JPanel contentPane;
-	private boolean ConexionEstablecida = false; //Creamos una variable booleana para saber si la conexion ya ha sido establecida
 	ConexionMySQL conexion;//Defino la variable conexión fuera del if para poder llamarla en toda la función
+	private boolean ConexionEstablecida = false; //Creamos una variable booleana para saber si la conexion ya ha sido establecida
 
 	
 	public InicioSesion() {
@@ -63,11 +63,11 @@ public class InicioSesion implements ActionListener {
 		panel.add(Usuario);
 
 		//Usuario Valor
-		userText = new JTextField(20);
-		userText.setToolTipText("");
-		userText.setBackground(new Color(255, 255, 255));
-		userText.setBounds(114, 44, 160, 25);
-		panel.add(userText);
+		UsuarioValor = new JTextField(20);
+		UsuarioValor.setToolTipText("");
+		UsuarioValor.setBackground(new Color(255, 255, 255));
+		UsuarioValor.setBounds(114, 44, 160, 25);
+		panel.add(UsuarioValor);
 		
 		//Contaseña
 		JLabel Contraseña = new JLabel("Contraseña:");
@@ -77,9 +77,9 @@ public class InicioSesion implements ActionListener {
 		panel.add(Contraseña);
 
 		//Contraseña Valor
-		passwordText = new JPasswordField(20);
-		passwordText.setBounds(114, 116, 160, 25);
-		panel.add(passwordText);
+		ContraseñaValor = new JPasswordField(20);
+		ContraseñaValor.setBounds(114, 116, 160, 25);
+		panel.add(ContraseñaValor);
 
 		//Botón login
 		botonlogin = new JButton("Inicio Sesión");
@@ -87,7 +87,7 @@ public class InicioSesion implements ActionListener {
 		botonlogin.setBounds(190, 206, 130, 52);
 		panel.add(botonlogin);
 		botonlogin.addActionListener(this);
-		
+			
 		//Botón Registro
 		botonregistro = new JButton("Registrar");
 		botonregistro.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -126,14 +126,14 @@ public class InicioSesion implements ActionListener {
 		else {
 			
 		
-		// 1.- Recoge el nombre de usuario y contraseña de la interfaz
+		// Recoge el nombre de usuario y contraseña de la interfaz
 	
-		String usuario = userText.getText();
-		String contraseña = passwordText.getText();// Pendiente
+		String usuario = UsuarioValor.getText();
+		String contraseña = ContraseñaValor.getText();// Pendiente
 
 		System.out.println("Controlador: " + "Usuario: " + usuario + " " + "Contraseña: " + contraseña);
 
-		// 2.- Establece conexión con la base de datos
+		// Establece conexión con la base de datos desde el inicio de sesión
 		if(ConexionEstablecida ==false) {
 			conexion = new ConexionMySQL("proyectofinal", "proyectofinal", "proyectofinal");
 			try {
@@ -154,7 +154,6 @@ public class InicioSesion implements ActionListener {
 			
 			if(existeusuario) 
 				{
-					System.out.println("Controlador: El usuario existe"); 
 					// al iniciar correctamente la sesión, debe desaparecer la ventana de inicio de sesión.
 					v_iniciosesion.setVisible(false);
 					Principal2 vp = new Principal2(usuario, contraseña, conexion);
@@ -162,7 +161,6 @@ public class InicioSesion implements ActionListener {
 				} 
 				else 
 				{
-					System.out.println("Controlador: El usuario no existe"); 
 			  		JOptionPane.showMessageDialog(null, "El usuario no existe, inténtalo de nuevo",
   					"Fallo de autenticación", JOptionPane.ERROR_MESSAGE);}
 			} catch (SQLException e1) {

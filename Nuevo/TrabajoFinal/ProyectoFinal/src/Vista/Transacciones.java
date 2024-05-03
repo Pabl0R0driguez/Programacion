@@ -48,7 +48,6 @@ public class Transacciones extends JFrame implements ActionListener {
 	
 	
 	public Transacciones(String usuario, String operacion, ConexionMySQL conexion)  {
-		//setIconImage(Toolkit.getDefaultToolkit().getImage(Transacciones.class.getResource("/Imagenes/hucha.png")));
 		this.usuario=usuario;
 		this.operacion=operacion;
 		this.conexion=conexion;
@@ -61,11 +60,13 @@ public class Transacciones extends JFrame implements ActionListener {
 	 
 	   
 	        // Frame initialization
+
 	        f = new JFrame();
 	        f.getContentPane().setBackground(new Color(255, 255, 255));
-	 
+			f.setIconImage(Toolkit.getDefaultToolkit().getImage(Transacciones.class.getResource("/Imagenes/hucha.png")));
+
 	        // Frame Title
-	        f.setTitle("JTable Example");
+	        f.setTitle("Transacciones");
 	 
 	        // Data to be displayed in the JTable
 	        String[][] datos = new String [100][6] ;
@@ -133,8 +134,6 @@ public class Transacciones extends JFrame implements ActionListener {
 	        
 	    }
 
-
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==BotonVolver) {
@@ -145,29 +144,32 @@ public class Transacciones extends JFrame implements ActionListener {
 				
 
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				e1.printStackTrace();	
 			}
 			
-			}
+		}
 		
 		
 		if(e.getSource()==BuscarBoton) {
-					
+		
+		boolean existe = true;
+		
+		if(existe) {
+				
+		}
 		try {
-			String AñadirOperaciones = FuncionesOperaciones.Filtrar(usuario,conexion);
-			System.out.println("hh");
-			this.setName(AñadirOperaciones);
-			
+			String AñadirOperaciones = FuncionesOperaciones.Filtrar();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
-		}
+		}	
 		
+	}
 		}
 	}
 	
 	
 	
-}
+
 	
 
 
