@@ -15,15 +15,9 @@ import Vista.Transacciones;
 public class FuncionesOperaciones {
 	// comprobar los datos introducidos.
 		
-		public static int anadir(String importe, String metodo, String categoria, String nota , String operacion,String usuario, ConexionMySQL conexion) throws SQLException  {
-			
-
-				System.out.println("Repositorio: consultando a la base de datos. importe: " + importe + " metodo: " + metodo + 
-						" categoria: " + categoria + " 	nota: " + nota + " operación: " + operacion + " usuario: " + usuario );
-				
-				
-		// comprobar si el usuario y la contraseña existen en la base de datos String
-		String sentenciaImporte = "INSERT INTO Operaciones( movimiento, metodopago, importe, notas, usuario, Categoria) "
+		public static int anadir(String importe, String metodo, String categoria, String nota , String operacion,String usuario, ConexionMySQL conexion) throws SQLException  {										
+	// comprobar si el usuario y la contraseña existen en la base de datos String
+	String sentenciaImporte = "INSERT INTO Operaciones( movimiento, metodopago, importe, notas, usuario, Categoria) "
 								+ " VALUES ('" + operacion + "','" + metodo + "'," + importe + ", '" + nota + "','" + usuario + "', '" + categoria+"');"; 
 				  		
 		
@@ -44,8 +38,7 @@ public class FuncionesOperaciones {
 			String sentenciaIngreso ="SELECT sum(importe) AS SumaIngresos "
 			+ "FROM `Operaciones` WHERE movimiento='Ingreso' AND usuario = '" + usuario + "';" ;
 		
-			
-			
+					
 			
 			////////////////////////////   Consulta de Gastos  ///////////////////////////////
 			//El resultado de la consulta a la base de datos se guarda en el ResultSet
@@ -92,6 +85,7 @@ public class FuncionesOperaciones {
 		//////////////////////////////
 		public static ArrayList<String> leerCategorias(ConexionMySQL conexion ) throws SQLException {
 			String sentenciaCategorias = "SELECT Nombre FROM Categorias";
+			//Usamos arrayList para guardar los nombre de las categorias ya que es una lista de nombres
 			ArrayList<String> resultado = new ArrayList<>();
 			
 			 ResultSet datos; 
@@ -134,55 +128,29 @@ public class FuncionesOperaciones {
 			  return resultadoHistorial;
 }
 		
-///////////////////////??		
-		public static String Filtrar() throws SQLException {
-			String resultadoBusqueda=Vista.Transacciones.FiltrarValor.getText();				
-			
-			return resultadoBusqueda;
-		
-}
+
+
 		
 		//Actualizar nombre usuario
-		public static void actualizar(String nuevoUsuario,ConexionMySQL conexion) throws SQLException {
-			String CambiarUsuario = "UPDATE Usuarios  SET usuario = '" + nuevoUsuario+ "' WHERE usuario = '" 
-		+ Vista.InicioSesion.UsuarioValor.getText() + "'";
+		public static void actualizar(String usuario,String usuarionuevo,ConexionMySQL conexion) throws SQLException {
+			String CambiarUsuario = "UPDATE Usuarios  SET usuario = '" + usuarionuevo+ "' WHERE usuario = '" 
+		+ usuario + "';";	
 					
-			conexion.ejecutarInsertDeleteUpdate(CambiarUsuario);
-			
+			int filas = conexion.ejecutarInsertDeleteUpdate(CambiarUsuario);
+			System.out.println("fila: " + filas);
+			if(filas==1)//Significa que he hecho 
+			{
+				JOptionPane.showMessageDialog(null, "Usuario cambiado con éxito",
+	  					"Cambio de nombre de usuario", JOptionPane.YES_NO_CANCEL_OPTION);}
+			}
+		
 		}
 		
 		
-		public static int BorrarCategoria(String categoria, ConexionMySQL conexion) throws SQLException {
-			
-			String sentenciaBorrar = "DELETE FROM Categorias WHERE Nombre = '" + categoria + "';";
-			String sentenciaConsulta = "SELECT Nombre FROM Categorias WHERE Nombre= '" + categoria + "';"; 
-			String resultado = "";
-			
-			
-			
-			/////// Consulta de la categoría a borrar 
 		
-			ResultSet borrar; 
-			  //Comprobación  de nombre
-			borrar = conexion.ejecutarSelect(sentenciaConsulta);
-			  while(borrar.next()) {
-				  // Consulta del nombre 
-				  resultado = borrar.getString("Nombre");//nombre del campo en la base de datos
-			  }
-			  //
-			  if(resultado.equals(categoria)) {
-				  int fila=
-					conexion.ejecutarInsertDeleteUpdate(sentenciaBorrar);
-System.out.println("fila: "+ fila);
-			  }
-			  else {
-				  JOptionPane.showMessageDialog(null, "La categoria no existe",
-		  					"Error", JOptionPane.ERROR_MESSAGE);
-			  }
-				return 0;
 	  
-}
-}
+
+
 
 		
 

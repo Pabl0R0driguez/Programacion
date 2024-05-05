@@ -37,87 +37,54 @@ public class Transacciones extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JLabel Historial;
 	private JLabel lblNewLabel;
-	private String usuario, operacion;
+	private String usuario;
 	private ConexionMySQL conexion;
 	private JLabel BotonIcono;
 	private JTable table;
-	private Button BotonVolver;
-	public static JTextField FiltrarValor;
-	private JLabel Filtrar;
-	private JButton BuscarBoton;
-	
-	
-	public Transacciones(String usuario, String operacion, ConexionMySQL conexion)  {
+	private JFrame f;
+	private JTable j;
+	ArrayList<Transaccion> ListaOperaciones;  // Todas las transacciones
+	String[][] datos;
+	 
+	 
+	public Transacciones(String usuario,ConexionMySQL conexion)  {
 		this.usuario=usuario;
-		this.operacion=operacion;
 		this.conexion=conexion;
 
-		//initPantalla();
 		// frame
 	    JFrame f;
 	    // Table
 	    JTable j;
 	 
 	   
-	        // Frame initialization
+	        
 
 	        f = new JFrame();
 	        f.getContentPane().setBackground(new Color(255, 255, 255));
-			f.setIconImage(Toolkit.getDefaultToolkit().getImage(Transacciones.class.getResource("/Imagenes/hucha.png")));
-
-	        // Frame Title
+			f.setIconImage(Toolkit.getDefaultToolkit().getImage(Transacciones.class.getResource("/Imagenes/hucha.png")));     
 	        f.setTitle("Transacciones");
-	 
-	        // Data to be displayed in the JTable
-	        String[][] datos = new String [100][6] ;
-	 
-	        // Column Names
-	        String[] columnNames = { "Movimiento", "Metodo", "Importe" , "Nota", "Usuario", "Categoria" };
+	        f.setSize(500, 200);
+	        f.setVisible(true);
+	        
+	        //Array y tamaño
+	        datos = new String [100][6] ;
+	        
+	        //Nombre columnas
+	 	    String[] columnNames = { "Movimiento", "Metodo", "Importe" , "Nota", "Usuario", "Categoria" };
+	 	    
 	        f.getContentPane().setLayout(null);
-	 
-	        // Initializing the JTable
+	        //Inicializamos la tabla
 	        j = new JTable(datos, columnNames);
 	        j.setBounds(30, 40, 200, 300);
 	 
-	        // adding it to JScrollPane
+	        // La añadimos al scrollpane
 	        JScrollPane sp = new JScrollPane(j);
-	        sp.setBounds(0, 34, 486, 91);
+	        sp.setBounds(0, 0, 486, 153);
 	        f.getContentPane().add(sp);
-	                
-	        // Frame Size
-	        f.setSize(500, 200);
-	        // Frame Visible = true
-	        f.setVisible(true);
-	        
-	        //Botón Volver
-	        BotonVolver = new Button("Volver");
-	        BotonVolver.setBackground(new Color(255, 255, 255));
-	        BotonVolver.addActionListener(this);      	
-	        BotonVolver.setBounds(200, 131, 81, 22);
-	        f.getContentPane().add(BotonVolver);
-	               	        
-	        //Filtrar
-	        Filtrar = new JLabel("Filtrar: ");
-	        Filtrar.setFont(new Font("Tahoma", Font.BOLD, 15));
-	        Filtrar.setBounds(99, 12, 65, 14);
-	        f.getContentPane().add(Filtrar);
-	        
-	        //Filtrar Valor
-	        FiltrarValor = new JTextField();
-	        FiltrarValor.setBounds(174, 11, 121, 15);
-	        f.getContentPane().add(FiltrarValor);
-	        FiltrarValor.setColumns(10);
-	        
-	        BuscarBoton = new JButton("Buscar");
-	        BuscarBoton.addActionListener(this);
-	        	
-	        BuscarBoton.setBounds(315, 10, 81, 14);
-	        f.getContentPane().add(BuscarBoton);
-	        FiltrarValor.addActionListener(this);
 	        
 	        
 	        try {
-	    		ArrayList<Transaccion> ListaOperaciones = FuncionesOperaciones.Historial(usuario, conexion);
+	    		ListaOperaciones = FuncionesOperaciones.Historial(usuario, conexion);
 	    		for(int i=0;i<ListaOperaciones.size();i++) {
 	    			datos[i][0] = ListaOperaciones.get(i).getMovimiento();
 	    			datos[i][1] = ListaOperaciones.get(i).getMetodopago();
@@ -136,37 +103,10 @@ public class Transacciones extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==BotonVolver) {
-			this.setVisible(false);
-			try {
-				Principal2 p1 = new Principal2(usuario,operacion,conexion);
-				p1.setVisible(true);
-				
-
-			} catch (SQLException e1) {
-				e1.printStackTrace();	
-			}
-			
-		}
 		
-		
-		if(e.getSource()==BuscarBoton) {
-		
-		boolean existe = true;
-		
-		if(existe) {
-				
-		}
-		try {
-			String AñadirOperaciones = FuncionesOperaciones.Filtrar();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}	
 		
 	}
-		}
-	}
-	
+}
 	
 	
 

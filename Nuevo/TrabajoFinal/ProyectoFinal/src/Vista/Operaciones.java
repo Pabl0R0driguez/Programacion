@@ -208,7 +208,7 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	    	SaldoValor.setBackground(new Color(0, 139, 139));
 			SaldoValor.setFont(new Font("Tahoma", Font.BOLD, 15));
 			SaldoValor.setHorizontalAlignment(SwingConstants.CENTER);
-			SaldoValor.setBounds(353, 76, 72, 48);
+			SaldoValor.setBounds(335, 70, 90, 54);
 			getContentPane().add(SaldoValor);
 		
 	        	       
@@ -257,7 +257,7 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 		            	  setVisible(false);
 		                  
 						try {
-							Categorias a1 = new Categorias(operacion,usuario,conexion);
+							Categorias a1 = new Categorias(usuario,conexion);
 			                  a1.setVisible(true);
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
@@ -295,8 +295,7 @@ public class Operaciones extends JFrame implements ActionListener, ItemListener,
 	           	
 	        
 	        if (e.getSource()==	Transacciones) {
-	        		setVisible(false);	
-					Transacciones t1 = new Transacciones(operacion, usuario,conexion);
+					Transacciones t1 = new Transacciones(usuario,conexion);
 					t1.setVisible(true);
 	        	
 	        }

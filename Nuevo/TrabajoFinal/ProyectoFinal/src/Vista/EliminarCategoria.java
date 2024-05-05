@@ -38,10 +38,10 @@ public class EliminarCategoria extends JFrame implements ActionListener{
 	private ConexionMySQL conexion;
 	private JLabel BotonIcono;
 	
-	public EliminarCategoria( ConexionMySQL conexion) throws SQLException {
+	public EliminarCategoria( String usuario,ConexionMySQL conexion) throws SQLException {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Categorias.class.getResource("/Imagenes/hucha.png")));
+		this.usuario=usuario;
 		this.conexion=conexion;
-		System.out.println("dentro eliminarcategoria");
 		Ventana();
 		initPantalla();
 	}
@@ -100,7 +100,7 @@ public class EliminarCategoria extends JFrame implements ActionListener{
 
 	/* Configuración general de la ventana principal */
 	  private void initPantalla() {
-		 	setLocation(200,200);
+		 	setLocation(500,200);
 	        setTitle("Categorias"); //Título del JFrame
 	        setSize(318, 153); //Dimensiones del JFrame
 	        setResizable(true); //Redimensionable
@@ -119,7 +119,7 @@ public class EliminarCategoria extends JFrame implements ActionListener{
 	   
 			// 3.- Insercción de operación
 			try {
-		    	int sentenciaCategorias =  FuncionesOperaciones.BorrarCategoria(recogerdatos, conexion);
+		    	int sentenciaCategorias =  FuncionesCategorias.BorrarCategoria(recogerdatos, conexion);
 				Operaciones o1 = new Operaciones(operacion, usuario, conexion);
 				o1.setVisible(true);
 				System.out.println(sentenciaCategorias);

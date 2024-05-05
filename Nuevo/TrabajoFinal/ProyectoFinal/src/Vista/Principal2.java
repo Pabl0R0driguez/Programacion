@@ -53,7 +53,9 @@ public class Principal2 extends JFrame implements ActionListener {
 	private JMenuItem NuevoUsuario;
 	private JMenu Actualizar;
 
-	public Principal2(String operacion, String usuario, ConexionMySQL conexion) throws SQLException {
+	
+	 	public Principal2(String operacion, String usuario, ConexionMySQL conexion) throws SQLException {
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Principal2.class.getResource("/Imagenes/hucha.png")));
 		this.usuario = usuario;
 		this.conexion=conexion;
@@ -61,11 +63,14 @@ public class Principal2 extends JFrame implements ActionListener {
 		Menu();
 		Saldo();
 	    initPantalla();
-
+	    
+	    //Saldo Actual
 	    int SaldoActual = FuncionesOperaciones.obtenerSaldo(usuario,conexion);	
 		//Pasamos Saldo Actual de entero a String 
 		SaldoValor.setText(SaldoActual + "");
 
+
+	   
 	}   
 
 //////////MENU/////////
@@ -105,8 +110,6 @@ public class Principal2 extends JFrame implements ActionListener {
 		NuevoUsuario = new JMenuItem("Cambiar nombre");
 		Actualizar.add(NuevoUsuario);
 		NuevoUsuario.addActionListener(this);
-		
-		
 		
 		
 		Salir=new JMenu("Salir");
@@ -170,7 +173,9 @@ public class Principal2 extends JFrame implements ActionListener {
         Saldo.setFont(new Font("Tahoma", Font.BOLD, 18));
               
 
+        
        }
+        
   
 	    public void actionPerformed(ActionEvent e) {
 	               
@@ -180,14 +185,14 @@ public class Principal2 extends JFrame implements ActionListener {
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-		           System.exit(0);
-		           System.out.println("Sesión cerrada");
+		           System.exit(0);//Cierre de programa
+		           
 		        }
 	        
 	        if (e.getSource()==OpcionAñadir) {
 	        	setVisible(false);
 				try {
-					Categorias ca1 = new Categorias(operacion, usuario, conexion);
+					Categorias ca1 = new Categorias(usuario, conexion);
 					ca1.setVisible(true);
 				} catch (SQLException e1) {
 					
@@ -203,7 +208,6 @@ public class Principal2 extends JFrame implements ActionListener {
 					Operaciones i1 = new Operaciones("Ingreso" , usuario, conexion);
 					i1.setVisible(true);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} 
 	  	    	
@@ -216,29 +220,26 @@ public class Principal2 extends JFrame implements ActionListener {
 					Operaciones i1 = new Operaciones("Gasto" , usuario,conexion);
 					i1.setVisible(true);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} 
 		    
 		        }
 	        
 	        if(e.getSource()==Transacciones) {
-	        	setVisible(false);
-	        	Transacciones t1 = new Transacciones(usuario,operacion,conexion);
-	        	t1.setVisible(true);
+	        	Transacciones t1 = new Transacciones(usuario,conexion);
 	        }
 	        
 	        
 	        if(e.getSource()== NuevoUsuario) {
 	        	setVisible(false);
-	        	ActualizarNombre a1 = new ActualizarNombre(conexion);
+	        	ActualizarNombre a1 = new ActualizarNombre(usuario,conexion);
 	        	
 	        }
 	        
 	        if(e.getSource()==OpcionBorrar) {
 	        	setVisible(false);
 	        	try {
-					EliminarCategoria  t1  = new EliminarCategoria(conexion);
+					EliminarCategoria  t1  = new EliminarCategoria(usuario,conexion);
 					t1.setVisible(true);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
@@ -253,7 +254,7 @@ public class Principal2 extends JFrame implements ActionListener {
 	    
 		/* Configuración general de la ventana principal */
         private void initPantalla() {
-		 	setLocation(200,200);
+		 	setLocation(500,250);
 	        setTitle("Ventana Principal"); //Título del JFrame
 	        setSize(402, 321); //Dimensiones del JFrame
 	        setResizable(true); //Redimensionable

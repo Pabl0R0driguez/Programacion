@@ -23,32 +23,32 @@ import java.awt.Toolkit;
 public class ActualizarNombre implements ActionListener {
 	// Las creamos fuera para poder utilizarlas en todos los metodos
 	JTextField NuevoUsuario;
-	JPasswordField ContraseñaValor;
-	JFrame v_iniciosesion;
+	JFrame v_actualizarnombre;
 	JButton Actualizar;
 	JPanel contentPane;
 	ConexionMySQL conexion;//Defino la variable conexión fuera del if para poder llamarla en toda la función
-
+    String usuario;
 	
-	public ActualizarNombre(ConexionMySQL conexion) {
+	public ActualizarNombre(String usuario,ConexionMySQL conexion) {
+		this.usuario= usuario;
 		this.conexion=conexion;
-		v_iniciosesion = new JFrame("Inicio de Sesión");
-		v_iniciosesion.setIconImage(Toolkit.getDefaultToolkit().getImage(InicioSesion.class.getResource("/Imagenes/hucha.png")));
-		v_iniciosesion.setBackground(new Color(240, 240, 240));
-		v_iniciosesion.setSize(388, 317);
-		v_iniciosesion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		v_actualizarnombre = new JFrame("Actualizar nombre");
+		v_actualizarnombre.setIconImage(Toolkit.getDefaultToolkit().getImage(InicioSesion.class.getResource("/Imagenes/hucha.png")));
+		v_actualizarnombre.setBackground(new Color(240, 240, 240));
+		v_actualizarnombre.setSize(382, 229);
+		v_actualizarnombre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		v_actualizarnombre.setLocation(500, 200);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 128, 128));
-		v_iniciosesion.getContentPane().add(contentPane);
+		v_actualizarnombre.getContentPane().add(contentPane);
 		ComponentesLogin(contentPane);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(0, 186, 374, 2);
+		separator.setBounds(0, 124, 374, 2);
 		contentPane.add(separator);
 
-		v_iniciosesion.setVisible(true);
+		v_actualizarnombre.setVisible(true);
 	}
 
 	private void ComponentesLogin(JPanel panel) {
@@ -59,32 +59,20 @@ public class ActualizarNombre implements ActionListener {
 		JLabel Usuario = new JLabel("Nuevo Usuario:");
 		Usuario.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		Usuario.setForeground(new Color(0, 0, 0));
-		Usuario.setBounds(10, 42, 118, 25);
+		Usuario.setBounds(10, 60, 118, 25);
 		panel.add(Usuario);
 
 		//Usuario Valor
 		NuevoUsuario = new JTextField(20);
 		NuevoUsuario.setToolTipText("");
 		NuevoUsuario.setBackground(new Color(255, 255, 255));
-		NuevoUsuario.setBounds(114, 44, 160, 25);
+		NuevoUsuario.setBounds(147, 62, 160, 25);
 		panel.add(NuevoUsuario);
-		
-		//Contaseña
-		JLabel Contraseña = new JLabel("Contraseña:");
-		Contraseña.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		Contraseña.setForeground(new Color(0, 0, 0));
-		Contraseña.setBounds(10, 116, 102, 25);
-		panel.add(Contraseña);
-
-		//Contraseña Valor
-		ContraseñaValor = new JPasswordField(20);
-		ContraseñaValor.setBounds(114, 116, 160, 25);
-		panel.add(ContraseñaValor);
 			
 		//Botón Registro
 		Actualizar = new JButton("Actualizar");
 		Actualizar.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		Actualizar.setBounds(130, 202, 118, 52);
+		Actualizar.setBounds(216, 136, 118, 39);
 		panel.add(Actualizar);
 		Actualizar.addActionListener(this);
 
@@ -96,13 +84,13 @@ public class ActualizarNombre implements ActionListener {
 			
 		if(e.getSource()==Actualizar) {
 			
-				
+		v_actualizarnombre.setVisible(false);		
 			
-		String usuario = NuevoUsuario.getText();
-		String contraseña = ContraseñaValor.getText();
+		String nuevousuario = NuevoUsuario.getText(); 
+		
 		
 		try {
-			FuncionesOperaciones.actualizar(usuario, conexion);
+			FuncionesOperaciones.actualizar(usuario,nuevousuario, conexion);
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}

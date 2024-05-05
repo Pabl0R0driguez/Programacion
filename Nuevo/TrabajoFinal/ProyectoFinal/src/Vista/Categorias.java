@@ -38,9 +38,8 @@ public class Categorias extends JFrame implements ActionListener{
 	private ConexionMySQL conexion;
 	private JLabel BotonIcono;
 	
-	public Categorias(String operacion, String usuario, ConexionMySQL conexion) throws SQLException {
+	public Categorias( String usuario, ConexionMySQL conexion) throws SQLException {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Categorias.class.getResource("/Imagenes/hucha.png")));
-		this.operacion=operacion;
 		this.usuario = usuario; 
 		this.conexion=conexion;
 		
@@ -102,7 +101,7 @@ public class Categorias extends JFrame implements ActionListener{
 
 	/* Configuración general de la ventana principal */
 	  private void initPantalla() {
-		 	setLocation(200,200);
+		 	setLocation(500,200);
 	        setTitle("Categorias"); //Título del JFrame
 	        setSize(318, 153); //Dimensiones del JFrame
 	        setResizable(true); //Redimensionable
@@ -120,7 +119,7 @@ public class Categorias extends JFrame implements ActionListener{
 			
 			try {
 		    	int sentenciaCategorias = FuncionesCategorias.añadirCategorias(recogerdatos, conexion);
-				Operaciones o1 = new Operaciones(operacion, usuario, conexion);
+				Operaciones o1 = new Operaciones( operacion,usuario, conexion);
 				o1.setVisible(true);
 				System.out.println(sentenciaCategorias);
 				
