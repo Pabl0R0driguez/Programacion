@@ -120,7 +120,6 @@ public class InicioSesion implements ActionListener {
 			
 			//Abrimos la ventana de registro
 			Registro r1 = new Registro(conexion);
-			r1.setVisible(true);
 			
 		}
 		else {
